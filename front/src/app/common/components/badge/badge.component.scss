@@ -1,0 +1,31 @@
+span {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.625rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.badge--default {
+  background-color: var(--michelin-grey-100);
+  color: var(--michelin-grey-700);
+}
+
+.badge--yellow {
+  background-color: var(--michelin-yellow);
+  color: var(--michelin-black);
+}
+
+.badge--success {
+  background-color: rgba(69, 185, 165, 0.15);
+  color: #2a8f7d;
+}
+
+.badge--error {
+  background-color: rgba(198, 40, 40, 0.1);
+  color: var(--michelin-error);
+}

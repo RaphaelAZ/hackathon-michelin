@@ -1,0 +1,63 @@
+<section class="hero">
+  <div class="container hero__inner">
+    <div class="hero__content">
+      <span class="hero__eyebrow">Michelin Vélo</span>
+      <h1 class="hero__title">Roulez plus loin,<br />roulez en confiance</h1>
+      <p class="hero__description">
+        Découvrez notre gamme de pneus vélo conçus avec plus d'un siècle d'expertise.
+        Performance, durabilité et sécurité pour chaque sortie.
+      </p>
+      <div class="hero__actions">
+        <app-button variant="secondary" size="lg" routerLink="/pneus">
+          Découvrir nos pneus
+        </app-button>
+        <app-button variant="outline" size="lg" routerLink="/pneus">
+          Voir le catalogue
+        </app-button>
+      </div>
+    </div>
+    <div class="hero__visual" aria-hidden="true">
+      <div class="hero__circle hero__circle--outer"></div>
+      <div class="hero__circle hero__circle--inner"></div>
+      <div class="hero__circle hero__circle--center"></div>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="container">
+    <div class="features__grid">
+      @for (feature of features; track feature.title) {
+        <div class="features__item">
+          <span class="features__icon" aria-hidden="true">{{ feature.icon }}</span>
+          <h3>{{ feature.title }}</h3>
+          <p>{{ feature.description }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="featured">
+  <div class="container">
+    <div class="featured__header">
+      <h2>Nos pneus populaires</h2>
+      <a routerLink="/pneus" class="featured__link">Voir tout le catalogue →</a>
+    </div>
+    <div class="featured__grid">
+      @for (product of featuredProducts(); track product.id) {
+        <app-product-card [product]="product" />
+      }
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container cta__inner">
+    <h2>Livraison gratuite dès 75 €</h2>
+    <p>Profitez de la livraison offerte sur toutes vos commandes de pneus vélo.</p>
+    <app-button variant="secondary" size="lg" routerLink="/pneus">
+      Commander maintenant
+    </app-button>
+  </div>
+</section>

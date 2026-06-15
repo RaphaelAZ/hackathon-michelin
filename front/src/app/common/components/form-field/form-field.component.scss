@@ -1,0 +1,54 @@
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.form-field__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--michelin-grey-700);
+}
+
+.form-field__required {
+  color: var(--michelin-error);
+  margin-left: 0.125rem;
+}
+
+.form-field__error {
+  font-size: 0.8125rem;
+  color: var(--michelin-error);
+}
+
+.form-field__hint {
+  font-size: 0.8125rem;
+  color: var(--michelin-grey-500);
+}
+
+:host ::ng-deep input,
+:host ::ng-deep select,
+:host ::ng-deep textarea {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid var(--michelin-grey-200);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--michelin-grey-700);
+  background: var(--michelin-white);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+:host ::ng-deep input:focus,
+:host ::ng-deep select:focus,
+:host ::ng-deep textarea:focus {
+  outline: none;
+  border-color: var(--michelin-blue);
+  box-shadow: 0 0 0 3px rgba(39, 80, 155, 0.15);
+}
+
+:host ::ng-deep input.ng-invalid.ng-touched,
+:host ::ng-deep select.ng-invalid.ng-touched,
+:host ::ng-deep textarea.ng-invalid.ng-touched {
+  border-color: var(--michelin-error);
+}

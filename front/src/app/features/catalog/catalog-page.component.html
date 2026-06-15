@@ -1,0 +1,54 @@
+<div class="catalog">
+  <div class="container">
+    <header class="catalog__header">
+      <h1>Nos pneus vélo</h1>
+      <p>Explorez notre gamme complète de pneus pour route, ville, gravel, VTT et compétition.</p>
+    </header>
+
+    <div class="catalog__toolbar">
+      <div class="catalog__search">
+        <label for="search" class="sr-only">Rechercher un pneu</label>
+        <input
+          id="search"
+          type="search"
+          placeholder="Rechercher un pneu..."
+          [value]="productStore.searchQuery()"
+          (input)="onSearch($event)"
+        />
+      </div>
+
+      <div class="catalog__filters" role="group" aria-label="Filtrer par catégorie">
+        <button
+          type="button"
+          class="catalog__filter"
+          [class.catalog__filter--active]="productStore.selectedCategory() === 'all'"
+          (click)="setCategory('all')"
+        >
+          Tous
+        </button>
+        @for (category of productStore.categories(); track category) {
+          <button
+            type="button"
+            class="catalog__filter"
+            [class.catalog__filter--active]="productStore.selectedCategory() === category"
+            (click)="setCategory(category)"
+          >
+            {{ categoryLabels[category] }}
+          </button>
+        }
+      </div>
+    </div>
+
+    @if (productStore.filteredProducts().length === 0) {
+      <div class="catalog__empty">
+        <p>Aucun pneu ne correspond à votre recherche.</p>
+      </div>
+    } @else {
+      <div class="catalog__grid">
+        @for (product of productStore.filteredProducts(); track product.id) {
+          <app-product-card [product]="product" />
+        }
+      </div>
+    }
+  </div>
+</div>

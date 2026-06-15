@@ -1,0 +1,67 @@
+<div class="detail">
+  <div class="container">
+    @if (product(); as p) {
+      <nav class="detail__breadcrumb" aria-label="Fil d'Ariane">
+        <a routerLink="/pneus">Nos pneus</a>
+        <span aria-hidden="true"> / </span>
+        <span>{{ p.name }}</span>
+      </nav>
+
+      <div class="detail__grid">
+        <div class="detail__image-wrapper">
+          <img
+            [ngSrc]="p.imageUrl"
+            [alt]="p.name"
+            width="500"
+            height="500"
+            priority
+            class="detail__image"
+          />
+        </div>
+
+        <div class="detail__info">
+          <div class="detail__meta">
+            <span class="detail__category">{{ categoryLabel() }}</span>
+            @if (p.badge) {
+              <app-badge variant="yellow">{{ p.badge }}</app-badge>
+            }
+          </div>
+
+          <h1>{{ p.name }}</h1>
+          <p class="detail__size">Taille : {{ p.size }}</p>
+          <app-price [amount]="p.price" size="lg" />
+
+          <p class="detail__description">{{ p.description }}</p>
+
+          <ul class="detail__features">
+            @for (feature of p.features; track feature) {
+              <li>{{ feature }}</li>
+            }
+          </ul>
+
+          @if (p.inStock) {
+            <div class="detail__purchase">
+              <app-quantity-selector
+                [value]="quantity()"
+                (valueChange)="quantity.set($event)"
+              />
+              <app-button variant="primary" size="lg" [fullWidth]="true" (clicked)="addToCart()">
+                Ajouter au panier
+              </app-button>
+            </div>
+          } @else {
+            <app-badge variant="error">Produit en rupture de stock</app-badge>
+          }
+        </div>
+      </div>
+    } @else {
+      <div class="detail__not-found">
+        <h1>Produit introuvable</h1>
+        <p>Le pneu que vous recherchez n'existe pas ou a été retiré.</p>
+        <app-button variant="primary" routerLink="/pneus">
+          Retour au catalogue
+        </app-button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,85 @@
+import { Product } from '../models/product.model';
+
+export const PRODUCTS: Product[] = [
+  {
+    id: 'power-road-28',
+    name: 'Power Road',
+    shortDescription: 'Pneu route haute performance pour cyclistes exigeants.',
+    description:
+      'Le Power Road offre une adhérence exceptionnelle sur asphalte sec ou humide. Sa bande de roulement optimisée réduit la résistance au roulement tout en garantissant une tenue de route remarquable dans les virages.',
+    price: 54.99,
+    category: 'route',
+    size: '700 x 28c',
+    imageUrl: 'assets/images/tire-route.svg',
+    features: ['Faible résistance au roulement', 'Grip optimal par temps humide', 'Protection anti-crevaison'],
+    inStock: true,
+    badge: 'Best-seller',
+  },
+  {
+    id: 'protek-city-32',
+    name: 'Protek City',
+    shortDescription: 'Confort et durabilité pour vos trajets quotidiens en ville.',
+    description:
+      'Conçu pour les cyclistes urbains, le Protek City combine confort, robustesse et protection renforcée. Sa structure résistante aux débris urbains vous accompagne au quotidien en toute sérénité.',
+    price: 39.99,
+    category: 'ville',
+    size: '700 x 32c',
+    imageUrl: 'assets/images/tire-ville.svg',
+    features: ['Protection anti-crevaison renforcée', 'Confort accru', 'Longue durée de vie'],
+    inStock: true,
+  },
+  {
+    id: 'wild-racer-gravel-40',
+    name: 'Wild Racer Gravel',
+    shortDescription: 'Polyvalence gravel pour routes et chemins.',
+    description:
+      'Le Wild Racer Gravel excelle sur tous les terrains mixtes. Son profil agressif assure une excellente traction sur gravier, terre et asphalte, pour explorer sans limites.',
+    price: 49.99,
+    category: 'gravel',
+    size: '700 x 40c',
+    imageUrl: 'assets/images/tire-gravel.svg',
+    features: ['Traction multi-terrains', 'Structure renforcée', 'Tubeless Ready'],
+    inStock: true,
+    badge: 'Nouveau',
+  },
+  {
+    id: 'country-rock-29',
+    name: 'Country Rock',
+    shortDescription: 'Pneu VTT tout-terrain pour sentiers techniques.',
+    description:
+      'Le Country Rock est le compagnon idéal des sentiers exigeants. Ses crampons profonds offrent une adhérence maximale sur roche, boue et racines.',
+    price: 44.99,
+    category: 'vtt',
+    size: '29 x 2.25',
+    imageUrl: 'assets/images/tire-vtt.svg',
+    features: ['Crampons profonds', 'Résistance aux impacts', 'Tubeless Ready'],
+    inStock: true,
+  },
+  {
+    id: 'power-cup-comp-25',
+    name: 'Power Cup Competition',
+    shortDescription: 'Pneu compétition ultra-léger pour la performance pure.',
+    description:
+      'Développé avec les athlètes professionnels, le Power Cup Competition maximise la vitesse et la précision en course. Chaque gramme compte.',
+    price: 69.99,
+    category: 'competition',
+    size: '700 x 25c',
+    imageUrl: 'assets/images/tire-competition.svg',
+    features: ['Ultra-léger', 'Grip maximal en virage', 'Technologie Gum-X'],
+    inStock: true,
+    badge: 'Pro',
+  },
+  {
+    id: 'dynamic-sport-30',
+    name: 'Dynamic Sport',
+    shortDescription: 'Excellent rapport qualité-prix pour le cyclisme loisir.',
+    description:
+      'Le Dynamic Sport est le choix parfait pour les cyclistes loisir. Fiable, confortable et abordable, il couvre tous vos besoins du week-end.',
+    price: 29.99,
+    category: 'route',
+    size: '700 x 30c',
+    imageUrl: 'assets/images/tire-route.svg',
+    features: ['Excellent rapport qualité-prix', 'Confortable', 'Facile à monter'],
+    inStock: false,
+  },
+];

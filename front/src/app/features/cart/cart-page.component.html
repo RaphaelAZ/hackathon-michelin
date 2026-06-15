@@ -1,0 +1,91 @@
+<div class="cart">
+  <div class="container">
+    <h1>Mon panier</h1>
+
+    @if (cartStore.isEmpty()) {
+      <div class="cart__empty">
+        <p>Votre panier est vide.</p>
+        <app-button variant="primary" routerLink="/pneus">
+          Découvrir nos pneus
+        </app-button>
+      </div>
+    } @else {
+      <div class="cart__layout">
+        <div class="cart__items">
+          @for (line of cartStore.cartLines(); track line.productId) {
+            @if (line.product; as product) {
+              <article class="cart__item">
+                <a [routerLink]="['/pneus', product.id]" class="cart__item-image">
+                  <img
+                    [ngSrc]="product.imageUrl"
+                    [alt]="product.name"
+                    width="120"
+                    height="120"
+                  />
+                </a>
+                <div class="cart__item-info">
+                  <a [routerLink]="['/pneus', product.id]" class="cart__item-name">
+                    {{ product.name }}
+                  </a>
+                  <span class="cart__item-size">{{ product.size }}</span>
+                  <app-price [amount]="product.price" size="sm" />
+                </div>
+                <div class="cart__item-actions">
+                  <app-quantity-selector
+                    [value]="line.quantity"
+                    (valueChange)="cartStore.updateQuantity(product.id, $event)"
+                  />
+                  <button
+                    type="button"
+                    class="cart__remove"
+                    (click)="cartStore.removeItem(product.id)"
+                  >
+                    Supprimer
+                  </button>
+                </div>
+                <div class="cart__item-total">
+                  <app-price [amount]="product.price * line.quantity" size="md" />
+                </div>
+              </article>
+            }
+          }
+        </div>
+
+        <aside class="cart__summary">
+          <h2>Récapitulatif</h2>
+          <dl class="cart__summary-lines">
+            <div>
+              <dt>Sous-total</dt>
+              <dd><app-price [amount]="cartStore.subtotal()" size="sm" /></dd>
+            </div>
+            <div>
+              <dt>Livraison</dt>
+              <dd>
+                @if (cartStore.shipping() === 0) {
+                  <span class="cart__free">Gratuite</span>
+                } @else {
+                  <app-price [amount]="cartStore.shipping()" size="sm" />
+                }
+              </dd>
+            </div>
+            <div class="cart__summary-total">
+              <dt>Total</dt>
+              <dd><app-price [amount]="cartStore.total()" size="lg" /></dd>
+            </div>
+          </dl>
+          @if (cartStore.subtotal() < 75) {
+            <p class="cart__shipping-hint">
+              Plus que {{ remainingForFreeShipping() }} pour la livraison gratuite !
+            </p>
+          }
+          <app-button variant="primary" size="lg" [fullWidth]="true" routerLink="/commande">
+            Passer commande
+          </app-button>
+          <app-button variant="ghost" [fullWidth]="true" routerLink="/pneus">
+            Continuer mes achats
+          </app-button>
+        </aside>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<header class="header">
+  <div class="container header__inner">
+    <a routerLink="/" class="header__logo" aria-label="Michelin Vélo — Accueil">
+      <img ngSrc="assets/images/logo.svg" alt="Michelin" width="180" height="48" priority />
+    </a>
+
+    <nav class="header__nav" aria-label="Navigation principale">
+      <a routerLink="/" routerLinkActive="header__link--active" [routerLinkActiveOptions]="{ exact: true }" class="header__link">
+        Accueil
+      </a>
+      <a routerLink="/pneus" routerLinkActive="header__link--active" class="header__link">
+        Nos pneus
+      </a>
+    </nav>
+
+    <a routerLink="/panier" class="header__cart" aria-label="Panier">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path
+          d="M6 6h15l-1.5 9H7.5L6 6zM6 6L5 3H2"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <circle cx="9" cy="20" r="1.5" fill="currentColor" />
+        <circle cx="18" cy="20" r="1.5" fill="currentColor" />
+      </svg>
+      @if (cartCount() > 0) {
+        <span class="header__cart-badge">{{ cartCount() }}</span>
+      }
+    </a>
+  </div>
+</header>

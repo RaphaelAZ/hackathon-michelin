@@ -1,0 +1,43 @@
+<app-card [interactive]="true" [padding]="'none'">
+  <a [routerLink]="['/pneus', product().id]" class="product-card__link">
+    <div class="product-card__image-wrapper">
+      <img
+        [ngSrc]="product().imageUrl"
+        [alt]="product().name"
+        width="400"
+        height="400"
+        class="product-card__image"
+      />
+      @if (product().badge) {
+        <app-badge variant="yellow" class="product-card__badge">
+          {{ product().badge }}
+        </app-badge>
+      }
+      @if (!product().inStock) {
+        <app-badge variant="error" class="product-card__stock-badge">
+          Rupture
+        </app-badge>
+      }
+    </div>
+    <div class="product-card__content">
+      <span class="product-card__category">{{ categoryLabel() }}</span>
+      <h3 class="product-card__name">{{ product().name }}</h3>
+      <p class="product-card__description">{{ product().shortDescription }}</p>
+      <div class="product-card__footer">
+        <app-price [amount]="product().price" size="md" />
+        <span class="product-card__size">{{ product().size }}</span>
+      </div>
+    </div>
+  </a>
+  <div class="product-card__actions">
+    <app-button
+      variant="primary"
+      size="sm"
+      [fullWidth]="true"
+      [disabled]="!product().inStock"
+      (clicked)="addToCart($event)"
+    >
+      Ajouter au panier
+    </app-button>
+  </div>
+</app-card>

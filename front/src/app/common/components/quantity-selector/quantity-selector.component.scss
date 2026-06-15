@@ -1,0 +1,12 @@
+.quantity {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quantity__value {
+  min-width: 2rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1rem;
+}

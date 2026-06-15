@@ -1,0 +1,23 @@
+<div class="quantity" role="group" [attr.aria-label]="label()">
+  <app-button
+    variant="outline"
+    size="sm"
+    type="button"
+    [disabled]="value() <= min()"
+    (clicked)="decrement()"
+    aria-label="Diminuer la quantité"
+  >
+    −
+  </app-button>
+  <span class="quantity__value" aria-live="polite">{{ value() }}</span>
+  <app-button
+    variant="outline"
+    size="sm"
+    type="button"
+    [disabled]="value() >= max()"
+    (clicked)="increment()"
+    aria-label="Augmenter la quantité"
+  >
+    +
+  </app-button>
+</div>
