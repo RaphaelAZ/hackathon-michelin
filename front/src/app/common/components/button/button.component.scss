@@ -7,8 +7,7 @@
   width: 100%;
 }
 
-button,
-a {
+button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -23,31 +22,22 @@ a {
   line-height: 1.2;
 }
 
-button:focus-visible,
-a:focus-visible {
+button:focus-visible {
   outline: 2px solid var(--michelin-blue);
   outline-offset: 2px;
 }
 
-button:disabled,
-a[aria-disabled='true'] {
+button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  pointer-events: none;
 }
 
-button:not(:disabled):active,
-a:not([aria-disabled='true']):active {
+button:not(:disabled):active {
   transform: scale(0.98);
 }
 
-:host(.app-button-host--block) button,
-:host(.app-button-host--block) a {
+:host(.app-button-host--block) button {
   width: 100%;
-}
-
-a {
-  text-decoration: none;
 }
 
 .btn--sm {

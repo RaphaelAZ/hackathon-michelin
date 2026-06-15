@@ -19,11 +19,18 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  color: var(--michelin-blue);
 }
 
 .header__logo:hover {
   text-decoration: none;
   opacity: 0.9;
+}
+
+.header__logo-img {
+  display: block;
+  height: 36px;
+  width: auto;
 }
 
 .header__nav {

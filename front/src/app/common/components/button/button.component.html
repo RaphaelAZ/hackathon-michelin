@@ -1,20 +1,8 @@
-@if (routerLink()) {
-  <a
-    [routerLink]="routerLink()!"
-    [class]="buttonClasses()"
-    [attr.aria-disabled]="disabled() ? true : null"
-    [tabindex]="disabled() ? -1 : 0"
-    (click)="onLinkClick($event)"
-  >
-    <ng-content />
-  </a>
-} @else {
-  <button
-    [type]="type()"
-    [class]="buttonClasses()"
-    [disabled]="disabled()"
-    (click)="clicked.emit($event)"
-  >
-    <ng-content />
-  </button>
-}
+<button
+  [type]="type()"
+  [class]="buttonClasses()"
+  [disabled]="disabled()"
+  (click)="onClick($event)"
+>
+  <ng-content />
+</button>
