@@ -1,0 +1,16 @@
+type: object
+properties:
+  message:
+    type: string
+    example: The email field is required.
+  errors:
+    type: object
+    additionalProperties:
+      type: array
+      items:
+        type: string
+    example:
+      email:
+        - The email field is required.
+      password:
+        - The password field is required.

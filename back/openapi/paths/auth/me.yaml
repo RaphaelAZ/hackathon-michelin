@@ -1,0 +1,20 @@
+get:
+  tags:
+    - Authentication
+  summary: Get authenticated user
+  operationId: authMe
+  security:
+    - accessToken: []
+  responses:
+    '200':
+      description: Authenticated user
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+    '401':
+      description: Unauthenticated
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

@@ -1,0 +1,16 @@
+get:
+  tags:
+    - Health
+  summary: Health check
+  operationId: getHealth
+  responses:
+    '200':
+      description: Service is operational
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: ok
