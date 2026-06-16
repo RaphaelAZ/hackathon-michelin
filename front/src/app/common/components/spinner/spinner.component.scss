@@ -1,0 +1,16 @@
+:host {
+  display: flex;
+  justify-content: center;
+  padding: 4rem 0;
+  color: var(--michelin-blue);
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

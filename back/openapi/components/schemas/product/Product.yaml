@@ -1,0 +1,42 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+  slug:
+    type: string
+    example: 'power-road-28'
+  name:
+    type: string
+    example: 'Power Road'
+  short_description:
+    type: string
+    example: 'Pneu route haute performance pour cyclistes exigeants.'
+  description:
+    type: string
+    example: 'Le Power Road offre une adhérence exceptionnelle sur asphalte sec ou humide.'
+  price:
+    type: number
+    format: float
+    example: 54.99
+  category:
+    type: string
+    enum: [route, ville, gravel, vtt, competition]
+    example: 'route'
+  size:
+    type: string
+    example: '700 x 28c'
+  image_url:
+    type: string
+    example: 'assets/images/tire-route.svg'
+  in_stock:
+    type: boolean
+    example: true
+  badge:
+    type: string
+    nullable: true
+    example: 'Best-seller'
+  features:
+    type: array
+    items:
+      $ref: 'ProductFeature.yaml'

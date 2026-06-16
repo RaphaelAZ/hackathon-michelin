@@ -1,6 +1,16 @@
 <div class="detail">
   <div class="container">
-    @if (product(); as p) {
+    @if (isLoading()) {
+      <app-spinner />
+    } @else if (notFound()) {
+      <div class="detail__not-found">
+        <h1>Produit introuvable</h1>
+        <p>Le pneu que vous recherchez n'existe pas ou a été retiré.</p>
+        <app-button variant="primary" routerLink="/pneus">
+          Retour au catalogue
+        </app-button>
+      </div>
+    } @else if (product(); as p) {
       <nav class="detail__breadcrumb" aria-label="Fil d'Ariane">
         <a routerLink="/pneus">Nos pneus</a>
         <span aria-hidden="true"> / </span>
@@ -53,14 +63,6 @@
             <app-badge variant="error">Produit en rupture de stock</app-badge>
           }
         </div>
-      </div>
-    } @else {
-      <div class="detail__not-found">
-        <h1>Produit introuvable</h1>
-        <p>Le pneu que vous recherchez n'existe pas ou a été retiré.</p>
-        <app-button variant="primary" routerLink="/pneus">
-          Retour au catalogue
-        </app-button>
       </div>
     }
   </div>

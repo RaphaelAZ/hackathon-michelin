@@ -45,11 +45,15 @@
       <h2>Conçues pour chaque route que vous empruntez.</h2>
       <p>Trois disciplines, une même obsession de la vitesse et de la fiabilité.</p>
     </div>
-    <div class="products__grid">
-      @for (product of featuredProducts(); track product.id) {
-        <app-product-card [product]="product" />
-      }
-    </div>
+    @if (isLoading()) {
+      <app-spinner />
+    } @else {
+      <div class="products__grid">
+        @for (product of featuredProducts(); track product.id) {
+          <app-product-card [product]="product" />
+        }
+      </div>
+    }
     <a routerLink="/pneus" class="products__link">Voir tout le catalogue</a>
   </div>
 </section>

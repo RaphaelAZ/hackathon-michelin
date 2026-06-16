@@ -1,0 +1,28 @@
+get:
+  tags:
+    - Products
+  summary: Get a product by slug
+  operationId: productShow
+  parameters:
+    - name: slug
+      in: path
+      required: true
+      schema:
+        type: string
+        example: 'power-road-28'
+  responses:
+    '200':
+      description: Product detail
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/Product'
+    '404':
+      description: Product not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
