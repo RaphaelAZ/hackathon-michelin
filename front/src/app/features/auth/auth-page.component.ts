@@ -72,8 +72,9 @@ export class AuthPageComponent {
 
   protected onLoginSubmit(event: Event): void {
     event.preventDefault();
-    void submit(this.loginForm, async (values) => {
-      this.authStore.login({ email: values.email, password: values.password });
+    void submit(this.loginForm, async () => {
+      const { email, password } = this.loginModel();
+      this.authStore.login({ email, password });
       return null;
     });
   }
@@ -86,11 +87,12 @@ export class AuthPageComponent {
       return;
     }
     this.passwordMismatch.set(false);
-    void submit(this.registerForm, async (values) => {
+    void submit(this.registerForm, async () => {
+      const { firstName, lastName, email, password } = this.registerModel();
       this.authStore.register({
-        name: `${values.firstName} ${values.lastName}`.trim(),
-        email: values.email,
-        password: values.password,
+        name: `${firstName} ${lastName}`.trim(),
+        email,
+        password,
       });
       return null;
     });
