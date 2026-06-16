@@ -38,7 +38,7 @@ export const AuthStore = signalStore(
             authService.me().subscribe({
               next: (user) => {
                 patchState(store, { user, loading: false });
-                router.navigate(['/']);
+                router.navigate(['/pneus']);
               },
               error: () => patchState(store, { loading: false }),
             });
@@ -59,7 +59,7 @@ export const AuthStore = signalStore(
             authService.me().subscribe({
               next: (user) => {
                 patchState(store, { user, loading: false });
-                router.navigate(['/']);
+                router.navigate(['/pneus']);
               },
               error: () => patchState(store, { loading: false }),
             });
