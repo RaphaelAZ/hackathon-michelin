@@ -1,63 +1,92 @@
 <section class="hero">
-  <div class="container hero__inner">
-    <div class="hero__content">
-      <span class="hero__eyebrow">Michelin Vélo</span>
-      <h1 class="hero__title">Roulez plus loin,<br />roulez en confiance</h1>
-      <p class="hero__description">
-        Découvrez notre gamme de pneus vélo conçus avec plus d'un siècle d'expertise.
-        Performance, durabilité et sécurité pour chaque sortie.
+  <div class="container hero__grid">
+    <div>
+      <div class="hero__badge">Nouveau · Série carbone Aero 50</div>
+      <h1 class="hero__title">Des roues conçues pour devancer le vent.</h1>
+      <p class="hero__lead">
+        Des paires de roues carbone montées à la main, affinées en soufflerie et éprouvées sur la route.
+        Des montées plus légères, des descentes plus rapides, à chaque sortie.
       </p>
       <div class="hero__actions">
-        <app-button variant="secondary" size="lg" routerLink="/pneus">
-          Découvrir nos pneus
-        </app-button>
-        <app-button variant="outline" size="lg" routerLink="/pneus">
-          Voir le catalogue
-        </app-button>
+        <a class="btn btn--primary" routerLink="/pneus">Découvrir les roues</a>
+        <a class="btn btn--ghost" href="#tech">Notre technologie</a>
+      </div>
+      <div class="hero__stats">
+        <div>
+          <p class="hero__stat-value">1 180<span>g</span></p>
+          <p class="hero__stat-label">poids de la paire</p>
+        </div>
+        <div>
+          <p class="hero__stat-value">50<span>mm</span></p>
+          <p class="hero__stat-label">hauteur de jante</p>
+        </div>
+        <div>
+          <p class="hero__stat-value">2<span>ans</span></p>
+          <p class="hero__stat-label">de garantie</p>
+        </div>
       </div>
     </div>
-    <div class="hero__visual" aria-hidden="true">
-      <div class="hero__circle hero__circle--outer"></div>
-      <div class="hero__circle hero__circle--inner"></div>
-      <div class="hero__circle hero__circle--center"></div>
-    </div>
   </div>
 </section>
 
-<section class="features">
+<div class="trust-strip">
   <div class="container">
-    <div class="features__grid">
-      @for (feature of features; track feature.title) {
-        <div class="features__item">
-          <span class="features__icon" aria-hidden="true">{{ feature.icon }}</span>
-          <h3>{{ feature.title }}</h3>
-          <p>{{ feature.description }}</p>
-        </div>
-      }
+    <div class="trust-strip__track" aria-label="Testées sur route · Performance validée · Livraison offerte dès 75 € · Garantie 2 ans">
+      <p>Testées sur route · Performance validée · Livraison offerte dès 75 € · Garantie 2 ans</p>
+      <p aria-hidden="true">Testées sur route · Performance validée · Livraison offerte dès 75 € · Garantie 2 ans</p>
     </div>
   </div>
-</section>
+</div>
 
-<section class="featured">
+<section class="products" id="products">
   <div class="container">
-    <div class="featured__header">
-      <h2>Nos pneus populaires</h2>
-      <a routerLink="/pneus" class="featured__link">Voir tout le catalogue →</a>
+    <div class="section-head">
+      <p class="section-eyebrow">La collection</p>
+      <h2>Conçues pour chaque route que vous empruntez.</h2>
+      <p>Trois disciplines, une même obsession de la vitesse et de la fiabilité.</p>
     </div>
-    <div class="featured__grid">
+    <div class="products__grid">
       @for (product of featuredProducts(); track product.id) {
         <app-product-card [product]="product" />
       }
     </div>
+    <a routerLink="/pneus" class="products__link">Voir tout le catalogue</a>
   </div>
 </section>
 
-<section class="cta">
-  <div class="container cta__inner">
-    <h2>Livraison gratuite dès 75 €</h2>
-    <p>Profitez de la livraison offerte sur toutes vos commandes de pneus vélo.</p>
-    <app-button variant="secondary" size="lg" routerLink="/pneus">
-      Commander maintenant
-    </app-button>
+<section class="tech" id="tech">
+  <div class="container">
+    <div class="section-head">
+      <p class="section-eyebrow">Pourquoi Michelin</p>
+      <h2>L'ingénierie au cœur de chaque pneu.</h2>
+      <p>Quatre points clés pour gagner en vitesse, sécurité et durabilité.</p>
+    </div>
+    <div class="tech__grid">
+      @for (pillar of techPillars; track pillar.title) {
+        <article class="tech__cell">
+          <h3>{{ pillar.title }}</h3>
+          <p>{{ pillar.description }}</p>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="reviews">
+  <div class="container">
+    <div class="section-head">
+      <p class="section-eyebrow">Testées & notées</p>
+      <h2>Des cyclistes convaincus partout en Europe.</h2>
+    </div>
+    <div class="reviews__grid">
+      @for (review of reviews; track review.author) {
+        <article class="review">
+          <p class="review__rating">{{ review.rating }}</p>
+          <p class="review__quote">{{ review.quote }}</p>
+          <p class="review__author">{{ review.author }}</p>
+          <p class="review__role">{{ review.role }}</p>
+        </article>
+      }
+    </div>
   </div>
 </section>
