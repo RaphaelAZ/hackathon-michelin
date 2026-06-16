@@ -98,6 +98,9 @@
           </div>
         } @else {
           <form class="auth__form" (submit)="onLoginSubmit($event)" novalidate>
+            @if (authStore.error()) {
+              <div class="auth__error" role="alert">{{ authStore.error() }}</div>
+            }
             <app-form-field label="Adresse email" inputId="login-email" [required]="true" [error]="fieldError(loginForm.email)">
               <input
                 id="login-email"
@@ -122,8 +125,8 @@
               <a href="#" class="auth__link">Mot de passe oublié ?</a>
             </div>
 
-            <app-button type="submit" variant="primary" [fullWidth]="true" [disabled]="isSubmitting()">
-              @if (isSubmitting()) {
+            <app-button type="submit" variant="primary" [fullWidth]="true" [disabled]="authStore.loading()">
+              @if (authStore.loading()) {
                 Connexion en cours…
               } @else {
                 Se connecter
@@ -164,6 +167,9 @@
           </div>
 
           <form class="auth__form" (submit)="onRegisterSubmit($event)" novalidate>
+            @if (authStore.error()) {
+              <div class="auth__error" role="alert">{{ authStore.error() }}</div>
+            }
             <div class="auth__form-row">
               <app-form-field label="Prénom" inputId="reg-firstname" [required]="true" [error]="fieldError(registerForm.firstName)">
                 <input
@@ -234,8 +240,8 @@
               <a href="#" class="auth__link">Politique de confidentialité</a>.
             </p>
 
-            <app-button type="submit" variant="primary" [fullWidth]="true" [disabled]="isSubmitting()">
-              @if (isSubmitting()) {
+            <app-button type="submit" variant="primary" [fullWidth]="true" [disabled]="authStore.loading()">
+              @if (authStore.loading()) {
                 Création en cours…
               } @else {
                 Créer mon compte

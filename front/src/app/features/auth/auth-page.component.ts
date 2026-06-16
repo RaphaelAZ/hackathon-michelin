@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import {
   FieldTree,
   FormField,
@@ -12,6 +12,7 @@ import { RouterLink } from '@angular/router';
 
 import { ButtonComponent } from '../../common/components/button/button.component';
 import { FormFieldComponent } from '../../common/components/form-field/form-field.component';
+import { AuthStore } from '../../core/stores/auth.store';
 
 type AuthTab = 'login' | 'register';
 
@@ -23,11 +24,9 @@ type AuthTab = 'login' | 'register';
   styleUrls: ['./auth-page.component.scss'],
 })
 export class AuthPageComponent {
+  protected readonly authStore = inject(AuthStore);
   protected readonly activeTab = signal<AuthTab>('login');
-  protected readonly loginSuccess = signal(false);
-  protected readonly registerSuccess = signal(false);
   protected readonly passwordMismatch = signal(false);
-  protected readonly isSubmitting = signal(false);
 
   // ── Login ──────────────────────────────────────────────────────────────────
   private readonly loginModel = signal({ email: '', password: '' });
@@ -73,13 +72,10 @@ export class AuthPageComponent {
 
   protected onLoginSubmit(event: Event): void {
     event.preventDefault();
-    this.isSubmitting.set(true);
-    void submit(this.loginForm, async () => {
-      // TODO: connect to auth service
-      this.loginSuccess.set(true);
-      this.isSubmitting.set(false);
+    void submit(this.loginForm, async (values) => {
+      this.authStore.login({ email: values.email, password: values.password });
       return null;
-    }).finally(() => this.isSubmitting.set(false));
+    });
   }
 
   protected onRegisterSubmit(event: Event): void {
@@ -90,12 +86,13 @@ export class AuthPageComponent {
       return;
     }
     this.passwordMismatch.set(false);
-    this.isSubmitting.set(true);
-    void submit(this.registerForm, async () => {
-      // TODO: connect to auth service
-      this.registerSuccess.set(true);
-      this.isSubmitting.set(false);
+    void submit(this.registerForm, async (values) => {
+      this.authStore.register({
+        name: `${values.firstName} ${values.lastName}`.trim(),
+        email: values.email,
+        password: values.password,
+      });
       return null;
-    }).finally(() => this.isSubmitting.set(false));
+    });
   }
 }
