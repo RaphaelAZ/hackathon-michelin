@@ -44,6 +44,12 @@ export const routes: Routes = [
           import('./features/checkout/checkout-page.component').then((m) => m.CheckoutPageComponent),
         title: 'Commande — Michelin Vélo',
       },
+      {
+        path: 'parrainage',
+        loadComponent: () =>
+          import('./features/referral/referral-page.component').then((m) => m.ReferralPageComponent),
+        title: 'Parrainage — Michelin Vélo',
+      },
     ],
   },
   {
