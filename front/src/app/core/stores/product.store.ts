@@ -36,6 +36,9 @@ export const ProductStore = signalStore(
     getFeaturedProducts(): Product[] {
       return store.products().filter((product: Product) => product.inStock).slice(0, 3);
     },
+    getProductById(id: string): Product | undefined {
+      return store.products().find((product: Product) => product.id === id);
+    },
   })),
   withHooks({
     onInit(store) {
