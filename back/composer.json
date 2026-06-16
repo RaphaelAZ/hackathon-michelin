@@ -41,13 +41,10 @@
             "composer install",
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "@php artisan key:generate",
-            "@php artisan migrate --force",
-            "npm install --ignore-scripts",
-            "npm run build"
+            "@php -r \"if (extension_loaded('pdo_pgsql')) { passthru('php artisan migrate --force', $code); exit($code); } fwrite(STDERR, 'Skipping migrate: pdo_pgsql is not enabled in this PHP runtime. Enable the extension or run the command in a PostgreSQL-capable environment.\\n');\""
         ],
         "dev": [
-            "Composer\\Config::disableProcessTimeout",
-            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1 --timeout=0\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite --kill-others"
+            "@php artisan serve"
         ],
         "test": [
             "@php artisan config:clear --ansi @no_additional_args",
