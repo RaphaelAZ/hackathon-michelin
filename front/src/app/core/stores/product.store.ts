@@ -24,7 +24,7 @@ export const ProductStore = signalStore(
       const query = store.searchQuery().toLowerCase().trim();
       const category = store.selectedCategory();
 
-      return store.products().filter((product) => {
+      return store.products().filter((product: Product) => {
         const matchesCategory = category === 'all' || product.category === category;
         const matchesSearch =
           query === '' ||
@@ -34,9 +34,9 @@ export const ProductStore = signalStore(
         return matchesCategory && matchesSearch;
       });
     }),
-    categories: computed(() => {
-      const categories = new Set(store.products().map((product) => product.category));
-      return Array.from(categories);
+    categories: computed<TireCategory[]>(() => {
+      const categories = new Set<TireCategory>(store.products().map((product: Product) => product.category));
+      return [...categories];
     }),
   })),
   withMethods((store) => ({
@@ -47,10 +47,10 @@ export const ProductStore = signalStore(
       patchState(store, { searchQuery: query });
     },
     getProductById(id: string): Product | undefined {
-      return store.products().find((product) => product.id === id);
+      return store.products().find((product: Product) => product.id === id);
     },
     getFeaturedProducts(): Product[] {
-      return store.products().filter((product) => product.inStock).slice(0, 3);
+      return store.products().filter((product: Product) => product.inStock).slice(0, 3);
     },
   })),
 );
