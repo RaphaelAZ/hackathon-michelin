@@ -1,0 +1,25 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+  name:
+    type: string
+    example: John Doe
+  email:
+    type: string
+    format: email
+    example: john@example.com
+  email_verified_at:
+    type: string
+    format: date-time
+    nullable: true
+    example: null
+  created_at:
+    type: string
+    format: date-time
+    example: '2024-01-01T00:00:00.000000Z'
+  updated_at:
+    type: string
+    format: date-time
+    example: '2024-01-01T00:00:00.000000Z'

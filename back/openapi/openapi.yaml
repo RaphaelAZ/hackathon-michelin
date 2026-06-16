@@ -1,0 +1,42 @@
+openapi: 3.0.3
+info:
+  title: Hackathon Michelin API
+  description: REST API for Hackathon Michelin
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000/api/v1
+    description: Local development server
+paths:
+  /health:
+    $ref: 'paths/health.yaml'
+  /auth/login:
+    $ref: 'paths/auth/login.yaml'
+  /auth/logout:
+    $ref: 'paths/auth/logout.yaml'
+  /auth/refresh:
+    $ref: 'paths/auth/refresh.yaml'
+  /auth/me:
+    $ref: 'paths/auth/me.yaml'
+components:
+  securitySchemes:
+    accessToken:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Short-lived access token (60 min). Returned by /auth/login and /auth/refresh.
+    refreshToken:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Long-lived refresh token (2 weeks). Use only on POST /auth/refresh.
+  schemas:
+    TokenResponse:
+      $ref: 'components/schemas/TokenResponse.yaml'
+    AccessTokenResponse:
+      $ref: 'components/schemas/AccessTokenResponse.yaml'
+    User:
+      $ref: 'components/schemas/User.yaml'
+    Error:
+      $ref: 'components/schemas/Error.yaml'
+    ValidationError:
+      $ref: 'components/schemas/ValidationError.yaml'

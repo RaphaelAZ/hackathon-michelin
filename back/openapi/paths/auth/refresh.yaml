@@ -1,0 +1,23 @@
+post:
+  tags:
+    - Authentication
+  summary: Refresh access token
+  operationId: authRefresh
+  description: >
+    Send the **refresh token** (not the access token) as Bearer.
+    Returns a new access token only. The refresh token keeps its original TTL.
+  security:
+    - refreshToken: []
+  responses:
+    '200':
+      description: New access token issued
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccessTokenResponse'
+    '401':
+      description: Invalid or expired refresh token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
