@@ -5,6 +5,11 @@ import { MainLayoutComponent } from './common/layout/main-layout/main-layout.com
 export const routes: Routes = [
   {
     path: '',
+    redirectTo: 'auth',
+    pathMatch: 'full',
+  },
+  {
+    path: '',
     component: MainLayoutComponent,
     children: [
       {
@@ -42,7 +47,13 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'auth',
+    loadComponent: () =>
+      import('./features/auth/auth-page.component').then((m) => m.AuthPageComponent),
+    title: 'Connexion — Michelin Vélo',
+  },
+  {
     path: '**',
-    redirectTo: '',
+    redirectTo: 'auth',
   },
 ];
