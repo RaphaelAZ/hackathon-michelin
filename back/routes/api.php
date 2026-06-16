@@ -14,6 +14,7 @@ Route::prefix('v1')->group(function (): void {
     Route::get('/products/{slug}', [ProductController::class, 'show']);
 
     Route::prefix('auth')->group(function (): void {
+        Route::post('/register', [AuthController::class, 'register']);
         Route::post('/login', [AuthController::class, 'login']);
         Route::post('/refresh', [AuthController::class, 'refresh']);
 
