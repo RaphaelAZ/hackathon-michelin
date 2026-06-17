@@ -7,13 +7,7 @@ import { guestGuard } from './core/guards/guest.guard';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'auth',
-    pathMatch: 'full',
-  },
-  {
-    path: '',
     component: MainLayoutComponent,
-    canActivate: [authGuard],
     children: [
       {
         path: '',
@@ -37,18 +31,21 @@ export const routes: Routes = [
       },
       {
         path: 'panier',
+        canActivate: [authGuard],
         loadComponent: () =>
           import('./features/cart/cart-page.component').then((m) => m.CartPageComponent),
         title: 'Panier — Michelin Vélo',
       },
       {
         path: 'commande',
+        canActivate: [authGuard],
         loadComponent: () =>
           import('./features/checkout/checkout-page.component').then((m) => m.CheckoutPageComponent),
         title: 'Commande — Michelin Vélo',
       },
       {
         path: 'parrainage',
+        canActivate: [authGuard],
         loadComponent: () =>
           import('./features/referral/referral-page.component').then((m) => m.ReferralPageComponent),
         title: 'Parrainage — Michelin Vélo',
@@ -64,6 +61,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'auth',
+    redirectTo: '',
   },
 ];
