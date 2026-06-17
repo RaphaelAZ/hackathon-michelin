@@ -1,0 +1,48 @@
+post:
+  tags:
+    - Authentication
+  summary: Register
+  operationId: authRegister
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - name
+            - email
+            - password
+          properties:
+            name:
+              type: string
+              example: John Doe
+            email:
+              type: string
+              format: email
+              example: john@example.com
+            password:
+              type: string
+              format: password
+              minLength: 8
+              example: secret123
+            referral_code:
+              type: string
+              minLength: 8
+              maxLength: 8
+              nullable: true
+              example: AB3K9P2Q
+              description: Optional referral code of the sponsoring user (parrain).
+  responses:
+    '200':
+      description: Successful registration
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TokenResponse'
+    '422':
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ValidationError'

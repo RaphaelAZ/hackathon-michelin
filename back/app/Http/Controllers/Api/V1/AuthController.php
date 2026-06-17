@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
@@ -17,10 +18,21 @@ class AuthController extends Controller
     {
         $data = $request->validated();
 
+        do {
+            $referralCode = Str::upper(Str::random(8));
+        } while (User::where('referral_code', $referralCode)->exists());
+
+        $referredById = null;
+        if (! empty($data['referral_code'])) {
+            $referredById = User::where('referral_code', $data['referral_code'])->value('id');
+        }
+
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'referral_code' => $referralCode,
+            'referred_by_id' => $referredById,
         ]);
 
         $accessToken = auth('api')->login($user);

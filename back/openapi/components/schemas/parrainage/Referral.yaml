@@ -1,0 +1,23 @@
+type: object
+properties:
+  referral_code:
+    type: string
+    minLength: 8
+    maxLength: 8
+    example: AB3K9P2Q
+  sponsored_users:
+    type: array
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Jane Doe
+        email:
+          type: string
+          format: email
+          example: jane@example.com
+        created_at:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00.000000Z'

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\ProductCommentController;
 use App\Http\Controllers\Api\V1\ProductController;
+use App\Http\Controllers\Api\V1\ReferralController;
 use App\Http\Controllers\Api\V1\ResellerController;
 use App\Http\Controllers\OpenApiController;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,8 @@ Route::prefix('v1')->group(function (): void {
     Route::get('/resellers/{reseller}', [ResellerController::class, 'show']);
     Route::get('/products/{slug}/resellers', [ResellerController::class, 'byProduct']);
     Route::post('/products/{slug}/comments', [ProductCommentController::class, 'store'])->middleware('auth:api');
+
+    Route::get('/parrainage', [ReferralController::class, 'index'])->middleware(['auth:api', 'token.version']);
 
     Route::prefix('auth')->group(function (): void {
         Route::post('/register', [AuthController::class, 'register']);

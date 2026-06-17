@@ -15,8 +15,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(5)->create();
+        $users = User::factory(5)->create();
         $this->call(ProductSeeder::class);
         $this->call(ResellerSeeder::class);
+
+        foreach ($users as $index => $user) {
+            if ($index === 0 || ! fake()->boolean()) {
+                continue;
+            }
+
+            $sponsor = $users->slice(0, $index)->random();
+            $user->update(['referred_by_id' => $sponsor->id]);
+        }
     }
 }

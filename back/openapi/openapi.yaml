@@ -9,6 +9,8 @@ servers:
 paths:
   /health:
     $ref: 'paths/health.yaml'
+  /auth/register:
+    $ref: 'paths/auth/register.yaml'
   /auth/login:
     $ref: 'paths/auth/login.yaml'
   /auth/logout:
@@ -27,6 +29,8 @@ paths:
     $ref: 'paths/resellers/show.yaml'
   /products/{slug}/resellers:
     $ref: 'paths/resellers/by-product.yaml'
+  /parrainage:
+    $ref: 'paths/parrainage/index.yaml'
 components:
   securitySchemes:
     accessToken:
@@ -58,3 +62,5 @@ components:
       $ref: 'components/schemas/reseller/Reseller.yaml'
     ResellerWithoutProducts:
       $ref: 'components/schemas/reseller/ResellerWithoutProducts.yaml'
+    Referral:
+      $ref: 'components/schemas/parrainage/Referral.yaml'
