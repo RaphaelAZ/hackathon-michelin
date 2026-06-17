@@ -4,6 +4,25 @@
   color: #15140f;
 }
 
+.tire-scene-section {
+  padding-top: 4rem;
+  background: #0d0c08;
+  color: #f4f2ec;
+
+  .section-head {
+    color: #f4f2ec;
+    padding-bottom: 2.5rem;
+
+    h2 { color: #f4f2ec; }
+    p  { color: rgba(244, 242, 236, 0.7); }
+  }
+
+  app-tire-scene {
+    display: block;
+    width: 100%;
+  }
+}
+
 .hero {
   position: relative;
   isolation: isolate;

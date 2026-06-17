@@ -4,12 +4,13 @@ import { RouterLink } from '@angular/router';
 
 import { ProductCardComponent } from '../../common/components/product-card/product-card.component';
 import { SpinnerComponent } from '../../common/components/spinner/spinner.component';
+import { TireSceneComponent } from '../../common/components/tire-scene/tire-scene.component';
 import { ProductStore } from '../../core/stores/product.store';
 
 @Component({
   selector: 'app-home-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, NgOptimizedImage, ProductCardComponent, SpinnerComponent],
+  imports: [RouterLink, NgOptimizedImage, ProductCardComponent, SpinnerComponent, TireSceneComponent],
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],
 })

@@ -1,0 +1,9 @@
+<div class="scene">
+  <canvas #canvas></canvas>
+  <div class="scene__label" #phaseLabel aria-live="polite"></div>
+  <div class="scene__controls">
+    <button type="button" (click)="togglePause()">{{ isPaused ? 'Lecture' : 'Pause' }}</button>
+    <button type="button" (click)="restart()">Revoir</button>
+  </div>
+  <div class="scene__progress" #progressBar></div>
+</div>
