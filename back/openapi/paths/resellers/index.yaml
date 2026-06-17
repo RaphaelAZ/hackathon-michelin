@@ -1,0 +1,17 @@
+get:
+  tags:
+    - Resellers
+  summary: List all resellers
+  operationId: resellerIndex
+  responses:
+    '200':
+      description: List of resellers with their products
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Reseller'

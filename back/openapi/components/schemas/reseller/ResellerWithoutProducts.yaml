@@ -1,0 +1,26 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+  name:
+    type: string
+    example: 'Cycles & Co'
+  email:
+    type: string
+    format: email
+    example: 'contact@cycles-co.fr'
+  phone:
+    type: string
+    example: '01 23 45 67 89'
+  address:
+    type: string
+    example: '12 rue de la Paix, 75001 Paris'
+  website:
+    type: string
+    format: uri
+    nullable: true
+    example: 'https://www.cycles-co.fr'
+  is_recommended:
+    type: boolean
+    example: true

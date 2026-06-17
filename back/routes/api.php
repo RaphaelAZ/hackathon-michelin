@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\ProductCommentController;
 use App\Http\Controllers\Api\V1\ProductController;
+use App\Http\Controllers\Api\V1\ResellerController;
 use App\Http\Controllers\OpenApiController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,10 @@ Route::prefix('v1')->group(function (): void {
 
     Route::get('/products', [ProductController::class, 'index']);
     Route::get('/products/{slug}', [ProductController::class, 'show']);
+
+    Route::get('/resellers', [ResellerController::class, 'index']);
+    Route::get('/resellers/{reseller}', [ResellerController::class, 'show']);
+    Route::get('/products/{slug}/resellers', [ResellerController::class, 'byProduct']);
     Route::post('/products/{slug}/comments', [ProductCommentController::class, 'store'])->middleware('auth:api');
 
     Route::prefix('auth')->group(function (): void {

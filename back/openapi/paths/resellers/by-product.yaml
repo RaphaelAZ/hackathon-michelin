@@ -1,0 +1,30 @@
+get:
+  tags:
+    - Resellers
+  summary: List resellers selling a given product
+  operationId: resellerByProduct
+  parameters:
+    - name: slug
+      in: path
+      required: true
+      schema:
+        type: string
+        example: 'power-road-28'
+  responses:
+    '200':
+      description: List of resellers selling this product (without their full product list)
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ResellerWithoutProducts'
+    '404':
+      description: Product not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

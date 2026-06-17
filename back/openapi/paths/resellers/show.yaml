@@ -1,0 +1,28 @@
+get:
+  tags:
+    - Resellers
+  summary: Get a reseller by ID
+  operationId: resellerShow
+  parameters:
+    - name: reseller
+      in: path
+      required: true
+      schema:
+        type: integer
+        example: 1
+  responses:
+    '200':
+      description: Reseller detail with their products
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/Reseller'
+    '404':
+      description: Reseller not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

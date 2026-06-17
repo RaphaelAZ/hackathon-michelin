@@ -21,6 +21,12 @@ paths:
     $ref: 'paths/products/index.yaml'
   /products/{slug}:
     $ref: 'paths/products/show.yaml'
+  /resellers:
+    $ref: 'paths/resellers/index.yaml'
+  /resellers/{reseller}:
+    $ref: 'paths/resellers/show.yaml'
+  /products/{slug}/resellers:
+    $ref: 'paths/resellers/by-product.yaml'
 components:
   securitySchemes:
     accessToken:
@@ -48,3 +54,7 @@ components:
       $ref: 'components/schemas/product/Product.yaml'
     ProductFeature:
       $ref: 'components/schemas/product/ProductFeature.yaml'
+    Reseller:
+      $ref: 'components/schemas/reseller/Reseller.yaml'
+    ResellerWithoutProducts:
+      $ref: 'components/schemas/reseller/ResellerWithoutProducts.yaml'
