@@ -1,4 +1,4 @@
-export type TireCategory = 'route' | 'ville' | 'gravel' | 'vtt' | 'competition';
+export type TireCategory = 'road' | 'city' | 'gravel' | 'mountain' | 'cargo';
 
 export interface Product {
   id: string;
@@ -32,9 +32,9 @@ export interface CheckoutData {
 }
 
 export const TIRE_CATEGORY_LABELS: Record<TireCategory, string> = {
-  route: 'Route',
-  ville: 'Ville',
+  road: 'Route',
+  city: 'Ville',
   gravel: 'Gravel',
-  vtt: 'VTT',
-  competition: 'Compétition',
+  mountain: 'VTT',
+  cargo: 'Cargo',
 };
