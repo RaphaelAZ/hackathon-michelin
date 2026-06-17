@@ -1,7 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-
-import { CartStore } from '../../../core/stores/cart.store';
 
 @Component({
   selector: 'app-header',
@@ -10,8 +8,4 @@ import { CartStore } from '../../../core/stores/cart.store';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent {
-  private readonly cartStore = inject(CartStore);
-
-  protected readonly cartCount = this.cartStore.itemCount;
-}
+export class HeaderComponent {}

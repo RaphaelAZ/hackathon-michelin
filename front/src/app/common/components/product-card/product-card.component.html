@@ -34,10 +34,9 @@
       variant="primary"
       size="sm"
       [fullWidth]="true"
-      [disabled]="!product().inStock"
-      (clicked)="addToCart($event)"
+      [routerLink]="['/pneus', product().id]"
     >
-      Ajouter au panier
+      Voir le produit
     </app-button>
   </div>
 </app-card>

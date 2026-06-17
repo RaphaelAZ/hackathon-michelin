@@ -49,17 +49,7 @@
             }
           </ul>
 
-          @if (p.inStock) {
-            <div class="detail__purchase">
-              <app-quantity-selector
-                [value]="quantity()"
-                (valueChange)="quantity.set($event)"
-              />
-              <app-button variant="primary" size="lg" [fullWidth]="true" (clicked)="addToCart()">
-                Ajouter au panier
-              </app-button>
-            </div>
-          } @else {
+          @if (!p.inStock) {
             <app-badge variant="error">Produit en rupture de stock</app-badge>
           }
         </div>

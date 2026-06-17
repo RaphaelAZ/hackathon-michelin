@@ -25,23 +25,6 @@ export interface Product {
   comments?: ProductComment[];
 }
 
-export interface CartItem {
-  productId: string;
-  quantity: number;
-}
-
-export interface CheckoutData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  address: string;
-  city: string;
-  postalCode: string;
-  country: string;
-  notes: string;
-}
-
 export const TIRE_CATEGORY_LABELS: Record<TireCategory, string> = {
   road: 'Route',
   city: 'Ville',

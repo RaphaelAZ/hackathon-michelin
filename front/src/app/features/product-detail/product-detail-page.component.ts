@@ -15,12 +15,10 @@ import { finalize } from 'rxjs';
 import { BadgeComponent } from '../../common/components/badge/badge.component';
 import { ButtonComponent } from '../../common/components/button/button.component';
 import { PriceComponent } from '../../common/components/price/price.component';
-import { QuantitySelectorComponent } from '../../common/components/quantity-selector/quantity-selector.component';
 import { SpinnerComponent } from '../../common/components/spinner/spinner.component';
 import { AuthStore } from '../../core/stores/auth.store';
 import { Product, TIRE_CATEGORY_LABELS } from '../../core/models/product.model';
 import { ProductService } from '../../core/services/product.service';
-import { CartStore } from '../../core/stores/cart.store';
 
 @Component({
   selector: 'app-product-detail-page',
@@ -33,7 +31,6 @@ import { CartStore } from '../../core/stores/cart.store';
     BadgeComponent,
     ButtonComponent,
     PriceComponent,
-    QuantitySelectorComponent,
     SpinnerComponent,
   ],
   templateUrl: './product-detail-page.component.html',
@@ -50,7 +47,6 @@ export class ProductDetailPageComponent {
   protected readonly product = signal<Product | null>(null);
   protected readonly isLoading = signal(true);
   protected readonly notFound = signal(false);
-  protected readonly quantity = signal(1);
   protected readonly isSubmittingComment = signal(false);
   protected readonly commentError = signal('');
   protected readonly ratingOptions = [1, 2, 3, 4, 5] as const;
@@ -98,13 +94,6 @@ export class ProductDetailPageComponent {
     });
   }
 
-  protected addToCart(): void {
-    const p = this.product();
-    if (p) {
-      this.cartStore.addItem(p.id, this.quantity());
-    }
-  }
-
   protected setRating(rating: number): void {
     this.commentForm.controls.rating.setValue(rating);
     this.commentForm.controls.rating.markAsTouched();
@@ -142,12 +131,16 @@ export class ProductDetailPageComponent {
         },
         error: (error) => {
           if (error.status === 422) {
-            this.commentError.set('Merci de choisir une note entre 1 et 5 et d’écrire un commentaire valide.');
+            this.commentError.set(
+              'Merci de choisir une note entre 1 et 5 et d’écrire un commentaire valide.',
+            );
             return;
           }
 
           if (error.status === 401) {
-            this.commentError.set('Votre session a expiré. Reconnectez-vous pour publier un commentaire.');
+            this.commentError.set(
+              'Votre session a expiré. Reconnectez-vous pour publier un commentaire.',
+            );
             return;
           }
 
