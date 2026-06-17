@@ -31,6 +31,8 @@ class ProductController extends Controller
 
     public function show(string $slug): ProductResource
     {
-        return new ProductResource(Product::where('slug', $slug)->firstOrFail());
+        return new ProductResource(
+            Product::with(['comments.user', 'features'])->where('slug', $slug)->firstOrFail(),
+        );
     }
 }

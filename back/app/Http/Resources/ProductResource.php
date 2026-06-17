@@ -25,6 +25,9 @@ class ProductResource extends JsonResource
             'in_stock' => $this->in_stock,
             'badge' => $this->badge,
             'features' => $this->features->pluck('name'),
+            'average_rating' => $this->whenLoaded('comments', fn () => round((float) $this->comments->avg('rating'), 1)),
+            'comments_count' => $this->whenLoaded('comments', fn () => $this->comments->count()),
+            'comments' => ProductCommentResource::collection($this->whenLoaded('comments')),
         ];
     }
 }

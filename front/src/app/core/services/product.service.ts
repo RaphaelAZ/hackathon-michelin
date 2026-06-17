@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 
-import { Product, TireCategory } from '../models/product.model';
+import { Product, ProductComment, TireCategory } from '../models/product.model';
 
 export interface ProductFilters {
   search?: string;
@@ -22,6 +22,22 @@ interface ApiProduct {
   features: string[];
   in_stock: boolean;
   badge: string | null;
+  average_rating?: number | null;
+  comments_count?: number;
+  comments?: ApiComment[];
+}
+
+interface ApiComment {
+  id: number;
+  rating: number;
+  comment: string;
+  author_name: string;
+  created_at: string;
+}
+
+interface CreateCommentPayload {
+  rating: number;
+  comment: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -48,6 +64,12 @@ export class ProductService {
       .pipe(map((response) => this.mapProduct(response.data)));
   }
 
+  createComment(slug: string, payload: CreateCommentPayload): Observable<ProductComment> {
+    return this.http
+      .post<{ data: ApiComment }>(`http://localhost:8000/api/v1/products/${slug}/comments`, payload)
+      .pipe(map((response) => this.mapComment(response.data)));
+  }
+
   private mapProduct(api: ApiProduct): Product {
     return {
       id: api.slug,
@@ -61,6 +83,19 @@ export class ProductService {
       features: api.features,
       inStock: api.in_stock,
       badge: api.badge ?? undefined,
+      averageRating: api.average_rating ?? null,
+      commentsCount: api.comments_count ?? 0,
+      comments: api.comments?.map((comment) => this.mapComment(comment)) ?? [],
+    };
+  }
+
+  private mapComment(api: ApiComment): ProductComment {
+    return {
+      id: api.id,
+      rating: api.rating,
+      comment: api.comment,
+      authorName: api.author_name,
+      createdAt: api.created_at,
     };
   }
 }

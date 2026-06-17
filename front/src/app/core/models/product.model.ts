@@ -1,5 +1,13 @@
 export type TireCategory = 'road' | 'city' | 'gravel' | 'mountain' | 'cargo';
 
+export interface ProductComment {
+  id: number;
+  rating: number;
+  comment: string;
+  authorName: string;
+  createdAt: string;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -12,6 +20,9 @@ export interface Product {
   features: string[];
   inStock: boolean;
   badge?: string;
+  averageRating?: number | null;
+  commentsCount?: number;
+  comments?: ProductComment[];
 }
 
 export interface CartItem {

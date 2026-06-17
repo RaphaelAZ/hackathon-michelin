@@ -64,6 +64,101 @@
           }
         </div>
       </div>
+
+      <section class="detail__reviews" aria-labelledby="reviews-title">
+        <div class="detail__reviews-header">
+          <div>
+            <h2 id="reviews-title">Avis clients</h2>
+            <p>
+              @if (commentsCount() > 0) {
+                Note moyenne {{ averageRating() }}/5 sur {{ commentsCount() }} avis.
+              } @else {
+                Soyez le premier à partager votre avis.
+              }
+            </p>
+          </div>
+
+          @if (currentUser(); as user) {
+            <p class="detail__reviews-user">Connecté en tant que {{ user.name }}</p>
+          }
+        </div>
+
+        <form class="detail__review-form" [formGroup]="commentForm" (ngSubmit)="submitComment()">
+          <fieldset class="detail__rating-group">
+            <legend>Votre note</legend>
+
+            <div class="detail__rating-buttons" role="radiogroup" aria-label="Sélection de la note">
+              @for (rating of ratingOptions; track rating) {
+                <button
+                  type="button"
+                  class="detail__rating-button"
+                  [class.detail__rating-button--active]="commentForm.controls.rating.value >= rating"
+                  [attr.aria-pressed]="commentForm.controls.rating.value === rating"
+                  [attr.aria-label]="rating + ' étoile' + (rating > 1 ? 's' : '')"
+                  (click)="setRating(rating)"
+                >
+                  ★
+                </button>
+              }
+            </div>
+
+            @if (commentForm.controls.rating.touched && commentForm.controls.rating.invalid) {
+              <p class="detail__field-error">Choisissez une note entre 1 et 5 étoiles.</p>
+            }
+          </fieldset>
+
+          <label class="detail__comment-field">
+            <span>Votre commentaire</span>
+            <textarea
+              formControlName="comment"
+              rows="5"
+              placeholder="Partagez votre retour sur ce pneu..."
+            ></textarea>
+          </label>
+
+          @if (commentForm.controls.comment.touched && commentForm.controls.comment.invalid) {
+            <p class="detail__field-error">Ajoutez un commentaire d’au moins 5 caractères.</p>
+          }
+
+          @if (commentError()) {
+            <p class="detail__submit-error">{{ commentError() }}</p>
+          }
+
+          <app-button
+            variant="primary"
+            size="lg"
+            type="submit"
+            [disabled]="isSubmittingComment()"
+          >
+            {{ isSubmittingComment() ? 'Publication en cours...' : 'Publier mon avis' }}
+          </app-button>
+        </form>
+
+        <div class="detail__review-list">
+          @if (commentsCount() === 0) {
+            <p class="detail__review-empty">Aucun avis publié pour le moment.</p>
+          } @else {
+            @for (comment of comments(); track comment.id) {
+              <article class="detail__review-card">
+                <div class="detail__review-card-header">
+                  <div>
+                    <strong>{{ comment.authorName }}</strong>
+                    <p>{{ comment.createdAt | date: 'd MMMM y' }}</p>
+                  </div>
+
+                  <div class="detail__review-stars" aria-label="Note {{ comment.rating }} sur 5">
+                    @for (star of ratingOptions; track star) {
+                      <span [class.detail__review-star--filled]="star <= comment.rating">★</span>
+                    }
+                  </div>
+                </div>
+
+                <p class="detail__review-text">{{ comment.comment }}</p>
+              </article>
+            }
+          }
+        </div>
+      </section>
     }
   </div>
 </div>
