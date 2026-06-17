@@ -37,14 +37,18 @@ import { ProductService } from '../../core/services/product.service';
   styleUrls: ['./product-detail-page.component.scss'],
 })
 export class ProductDetailPageComponent {
+  private static readonly IMAGE_SWITCH_DURATION_MS = 120;
+
   private readonly productService = inject(ProductService);
-  private readonly cartStore = inject(CartStore);
   private readonly authStore = inject(AuthStore);
   private readonly formBuilder = inject(FormBuilder);
+  private imageSwitchTimer: ReturnType<typeof setTimeout> | null = null;
 
   readonly id = input.required<string>();
 
   protected readonly product = signal<Product | null>(null);
+  protected readonly selectedImageIndex = signal(0);
+  protected readonly isImageSwitching = signal(false);
   protected readonly isLoading = signal(true);
   protected readonly notFound = signal(false);
   protected readonly isSubmittingComment = signal(false);
@@ -62,6 +66,17 @@ export class ProductDetailPageComponent {
   });
 
   protected readonly comments = computed(() => this.product()?.comments ?? []);
+  protected readonly galleryImages = computed(() => {
+    const p = this.product();
+    if (!p) {
+      return [] as string[];
+    }
+
+    return p.imageUrls.length > 0 ? p.imageUrls : [p.imageUrl];
+  });
+  protected readonly selectedImageUrl = computed(
+    () => this.galleryImages()[this.selectedImageIndex()] ?? this.product()?.imageUrl ?? '',
+  );
   protected readonly commentsCount = computed(() => this.comments().length);
   protected readonly averageRating = computed(() => {
     const comments = this.comments();
@@ -80,6 +95,7 @@ export class ProductDetailPageComponent {
       this.isLoading.set(true);
       this.notFound.set(false);
       this.product.set(null);
+      this.selectedImageIndex.set(0);
 
       this.productService.getBySlug(slug).subscribe({
         next: (p) => {
@@ -92,6 +108,66 @@ export class ProductDetailPageComponent {
         },
       });
     });
+
+    effect(() => {
+      const imagesCount = this.galleryImages().length;
+      const currentIndex = this.selectedImageIndex();
+
+      if (imagesCount === 0) {
+        this.selectedImageIndex.set(0);
+        return;
+      }
+
+      if (currentIndex >= imagesCount) {
+        this.selectedImageIndex.set(0);
+      }
+    });
+  }
+
+  protected selectImage(index: number): void {
+    if (index < 0 || index >= this.galleryImages().length) {
+      return;
+    }
+
+    this.switchImageWithTransition(index);
+  }
+
+  protected showPreviousImage(): void {
+    const images = this.galleryImages();
+    if (images.length <= 1) {
+      return;
+    }
+
+    const current = this.selectedImageIndex();
+    this.switchImageWithTransition((current - 1 + images.length) % images.length);
+  }
+
+  protected showNextImage(): void {
+    const images = this.galleryImages();
+    if (images.length <= 1) {
+      return;
+    }
+
+    const current = this.selectedImageIndex();
+    this.switchImageWithTransition((current + 1) % images.length);
+  }
+
+  private switchImageWithTransition(nextIndex: number): void {
+    if (nextIndex === this.selectedImageIndex()) {
+      return;
+    }
+
+    if (this.imageSwitchTimer) {
+      clearTimeout(this.imageSwitchTimer);
+      this.imageSwitchTimer = null;
+    }
+
+    this.isImageSwitching.set(true);
+    this.imageSwitchTimer = setTimeout(() => {
+      this.selectedImageIndex.set(nextIndex);
+      this.isImageSwitching.set(false);
+      this.imageSwitchTimer = null;
+    }, ProductDetailPageComponent.IMAGE_SWITCH_DURATION_MS);
   }
 
   protected setRating(rating: number): void {

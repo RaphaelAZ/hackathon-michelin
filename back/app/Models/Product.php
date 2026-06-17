@@ -13,7 +13,7 @@ class Product extends Model
     /** @use HasFactory<ProductFactory> */
     use HasFactory;
 
-    protected $with = ['features'];
+    protected $with = ['features', 'images'];
 
     protected $fillable = [
         'slug',
@@ -39,6 +39,11 @@ class Product extends Model
     public function features(): HasMany
     {
         return $this->hasMany(ProductFeature::class);
+    }
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(ProductImage::class)->orderBy('position');
     }
 
     public function comments(): HasMany

@@ -1,0 +1,20 @@
+.cart-page {
+  padding: 3rem 0;
+}
+
+.cart-page__content {
+  max-width: 48rem;
+}
+
+.cart-page__actions {
+  margin-top: 1.25rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cart-page__link {
+  color: var(--michelin-blue, #0055a4);
+  text-decoration: underline;
+}

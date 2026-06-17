@@ -22,6 +22,10 @@ class ProductResource extends JsonResource
             'category' => $this->category,
             'size' => $this->size,
             'image_url' => $this->image_url,
+            'image_urls' => $this->images
+                ->pluck('url')
+                ->whenEmpty(fn ($images) => $images->push($this->image_url))
+                ->values(),
             'in_stock' => $this->in_stock,
             'badge' => $this->badge,
             'features' => $this->features->pluck('name'),

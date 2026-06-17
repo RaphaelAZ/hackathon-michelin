@@ -19,6 +19,7 @@ interface ApiProduct {
   category: string;
   size: string;
   image_url: string;
+  image_urls?: string[];
   features: string[];
   in_stock: boolean;
   badge: string | null;
@@ -80,6 +81,7 @@ export class ProductService {
       category: api.category as TireCategory,
       size: api.size,
       imageUrl: api.image_url,
+      imageUrls: api.image_urls && api.image_urls.length > 0 ? api.image_urls : [api.image_url],
       features: api.features,
       inStock: api.in_stock,
       badge: api.badge ?? undefined,

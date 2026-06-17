@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { NgOptimizedImage } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 import { ProductCardComponent } from '../../common/components/product-card/product-card.component';
@@ -10,7 +9,7 @@ import { ProductStore } from '../../core/stores/product.store';
 @Component({
   selector: 'app-home-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, NgOptimizedImage, ProductCardComponent, SpinnerComponent, TireSceneComponent],
+  imports: [RouterLink, ProductCardComponent, SpinnerComponent, TireSceneComponent],
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],
 })

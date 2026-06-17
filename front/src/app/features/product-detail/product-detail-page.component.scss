@@ -20,6 +20,7 @@
 }
 
 .detail__image-wrapper {
+  position: relative;
   background: var(--michelin-white);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
@@ -34,6 +35,76 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.detail__image--switching {
+  opacity: 0.38;
+  transform: scale(0.985);
+}
+
+.detail__gallery-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--michelin-grey-200);
+  background: var(--michelin-white);
+  border-radius: 999px;
+  color: var(--michelin-grey-700);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.detail__gallery-nav--prev {
+  left: 1rem;
+}
+
+.detail__gallery-nav--next {
+  right: 1rem;
+}
+
+.detail__gallery-nav:hover,
+.detail__gallery-nav:focus-visible {
+  border-color: var(--michelin-blue);
+  color: var(--michelin-blue);
+  outline: none;
+}
+
+.detail__thumbs {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.detail__thumb {
+  padding: 0;
+  border: 1px solid var(--michelin-grey-200);
+  border-radius: var(--radius-md);
+  background: var(--michelin-white);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.detail__thumb img {
+  display: block;
+  width: 5rem;
+  height: 5rem;
+  object-fit: cover;
+}
+
+.detail__thumb--active {
+  border-color: var(--michelin-blue);
+  box-shadow: 0 0 0 2px rgba(13, 92, 173, 0.18);
 }
 
 .detail__meta {
@@ -255,6 +326,10 @@ app-price {
 @media (max-width: 768px) {
   .detail__grid {
     grid-template-columns: 1fr;
+  }
+
+  .detail__thumbs {
+    justify-content: center;
   }
 
   .detail__reviews-header,

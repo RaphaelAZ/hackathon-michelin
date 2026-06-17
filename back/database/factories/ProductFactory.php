@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str as SupportStr;
 use Illuminate\Support\Str;
 
 /**
@@ -40,6 +41,17 @@ class ProductFactory extends Factory
 
             foreach (fake()->randomElements($featurePool, fake()->numberBetween(2, 4)) as $feature) {
                 $product->features()->create(['name' => $feature]);
+            }
+
+            $baseDir = SupportStr::beforeLast($product->image_url, '/');
+            $baseName = SupportStr::beforeLast(basename($product->image_url), '.');
+            $extension = pathinfo($product->image_url, PATHINFO_EXTENSION);
+
+            foreach ([1, 2, 3] as $index => $number) {
+                $product->images()->create([
+                    'url' => sprintf('%s/%s%s.%s', $baseDir, SupportStr::beforeLast($baseName, '1'), $number, $extension),
+                    'position' => $index,
+                ]);
             }
         });
     }

@@ -22,6 +22,13 @@ class ProductSeeder extends Seeder
                 'category' => 'road',
                 'size' => '700 x 28c',
                 'image_url' => 'assets/images/tires/road/road_tire1.webp',
+                'image_urls' => [
+                    'assets/images/tires/road/road_tire1.webp',
+                    'assets/images/tires/road/road_tire2.webp',
+                    'assets/images/tires/road/road_tire3.webp',
+                    'assets/images/tires/road/road_tire4.webp',
+                    'assets/images/tires/road/road_tire5.webp',
+                ],
                 'in_stock' => true,
                 'badge' => 'Best-seller',
                 'features' => ['Faible résistance au roulement', 'Grip optimal par temps humide', 'Protection anti-crevaison'],
@@ -35,6 +42,13 @@ class ProductSeeder extends Seeder
                 'category' => 'city',
                 'size' => '700 x 32c',
                 'image_url' => 'assets/images/tires/city/city_tire1.webp',
+                'image_urls' => [
+                    'assets/images/tires/city/city_tire1.webp',
+                    'assets/images/tires/city/city_tire2.webp',
+                    'assets/images/tires/city/city_tire3.webp',
+                    'assets/images/tires/city/city_tire4.webp',
+                    'assets/images/tires/city/city_tire5.webp',
+                ],
                 'in_stock' => true,
                 'badge' => null,
                 'features' => ['Protection anti-crevaison renforcée', 'Confort accru', 'Longue durée de vie'],
@@ -48,6 +62,13 @@ class ProductSeeder extends Seeder
                 'category' => 'gravel',
                 'size' => '700 x 40c',
                 'image_url' => 'assets/images/tires/gravel/gravel_tire1.webp',
+                'image_urls' => [
+                    'assets/images/tires/gravel/gravel_tire1.webp',
+                    'assets/images/tires/gravel/gravel_tire2.webp',
+                    'assets/images/tires/gravel/gravel_tire3.webp',
+                    'assets/images/tires/gravel/gravel_tire4.webp',
+                    'assets/images/tires/gravel/gravel_tire5.webp',
+                ],
                 'in_stock' => true,
                 'badge' => 'Nouveau',
                 'features' => ['Traction multi-terrains', 'Structure renforcée', 'Tubeless Ready'],
@@ -61,6 +82,13 @@ class ProductSeeder extends Seeder
                 'category' => 'mountain',
                 'size' => '29 x 2.25',
                 'image_url' => 'assets/images/tires/mountain/mountain_tire1.webp',
+                'image_urls' => [
+                    'assets/images/tires/mountain/mountain_tire1.webp',
+                    'assets/images/tires/mountain/mountain_tire2.webp',
+                    'assets/images/tires/mountain/mountain_tire3.webp',
+                    'assets/images/tires/mountain/mountain_tire4.webp',
+                    'assets/images/tires/mountain/mountain_tire5.webp',
+                ],
                 'in_stock' => true,
                 'badge' => null,
                 'features' => ['Crampons profonds', 'Résistance aux impacts', 'Tubeless Ready'],
@@ -74,6 +102,13 @@ class ProductSeeder extends Seeder
                 'category' => 'cargo',
                 'size' => '700 x 25c',
                 'image_url' => 'assets/images/tires/cargo/cargo_tire1.webp',
+                'image_urls' => [
+                    'assets/images/tires/cargo/cargo_tire1.webp',
+                    'assets/images/tires/cargo/cargo_tire2.webp',
+                    'assets/images/tires/cargo/cargo_tire3.webp',
+                    'assets/images/tires/cargo/cargo_tire4.webp',
+                    'assets/images/tires/cargo/cargo_tire5.webp',
+                ],
                 'in_stock' => true,
                 'badge' => 'Pro',
                 'features' => ['Ultra-léger', 'Grip maximal en virage', 'Technologie Gum-X'],
@@ -87,6 +122,13 @@ class ProductSeeder extends Seeder
                 'category' => 'road',
                 'size' => '700 x 30c',
                 'image_url' => 'assets/images/tires/road/road_tire1.webp',
+                'image_urls' => [
+                    'assets/images/tires/road/road_tire1.webp',
+                    'assets/images/tires/road/road_tire2.webp',
+                    'assets/images/tires/road/road_tire3.webp',
+                    'assets/images/tires/road/road_tire4.webp',
+                    'assets/images/tires/road/road_tire5.webp',
+                ],
                 'in_stock' => false,
                 'badge' => null,
                 'features' => ['Excellent rapport qualité-prix', 'Confortable', 'Facile à monter'],
@@ -95,13 +137,23 @@ class ProductSeeder extends Seeder
 
         foreach ($products as $data) {
             $features = $data['features'];
+            $imageUrls = $data['image_urls'] ?? [$data['image_url']];
             unset($data['features']);
+            unset($data['image_urls']);
 
             $product = Product::updateOrCreate(['slug' => $data['slug']], $data);
             $product->features()->delete();
+            $product->images()->delete();
 
             foreach ($features as $feature) {
                 $product->features()->create(['name' => $feature]);
+            }
+
+            foreach ($imageUrls as $index => $url) {
+                $product->images()->create([
+                    'url' => $url,
+                    'position' => $index,
+                ]);
             }
         }
     }

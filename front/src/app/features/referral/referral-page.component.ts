@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
 
 import { ButtonComponent } from '../../common/components/button/button.component';
 
 @Component({
   selector: 'app-referral-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, ButtonComponent],
+  imports: [ButtonComponent],
   templateUrl: './referral-page.component.html',
   styleUrls: ['./referral-page.component.scss'],
 })

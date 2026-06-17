@@ -19,14 +19,37 @@
 
       <div class="detail__grid">
         <div class="detail__image-wrapper">
+          @if (galleryImages().length > 1) {
+            <button
+              type="button"
+              class="detail__gallery-nav detail__gallery-nav--prev"
+              aria-label="Image precedente"
+              (click)="showPreviousImage()"
+            >
+              ‹
+            </button>
+          }
+
           <img
-            [ngSrc]="p.imageUrl"
+            [ngSrc]="selectedImageUrl()"
             [alt]="p.name"
             width="500"
             height="500"
             priority
             class="detail__image"
+            [class.detail__image--switching]="isImageSwitching()"
           />
+
+          @if (galleryImages().length > 1) {
+            <button
+              type="button"
+              class="detail__gallery-nav detail__gallery-nav--next"
+              aria-label="Image suivante"
+              (click)="showNextImage()"
+            >
+              ›
+            </button>
+          }
         </div>
 
         <div class="detail__info">

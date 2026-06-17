@@ -17,6 +17,7 @@ export interface Product {
   category: TireCategory;
   size: string;
   imageUrl: string;
+  imageUrls: string[];
   features: string[];
   inStock: boolean;
   badge?: string;
