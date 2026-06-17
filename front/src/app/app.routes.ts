@@ -1,11 +1,19 @@
 import { Routes } from '@angular/router';
 
 import { MainLayoutComponent } from './common/layout/main-layout/main-layout.component';
+import { authGuard } from './core/guards/auth.guard';
+import { guestGuard } from './core/guards/guest.guard';
 
 export const routes: Routes = [
   {
     path: '',
+    redirectTo: 'auth',
+    pathMatch: 'full',
+  },
+  {
+    path: '',
     component: MainLayoutComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: '',
@@ -39,10 +47,23 @@ export const routes: Routes = [
           import('./features/checkout/checkout-page.component').then((m) => m.CheckoutPageComponent),
         title: 'Commande — Michelin Vélo',
       },
+      {
+        path: 'parrainage',
+        loadComponent: () =>
+          import('./features/referral/referral-page.component').then((m) => m.ReferralPageComponent),
+        title: 'Parrainage — Michelin Vélo',
+      },
     ],
   },
   {
+    path: 'auth',
+    canActivate: [guestGuard],
+    loadComponent: () =>
+      import('./features/auth/auth-page.component').then((m) => m.AuthPageComponent),
+    title: 'Connexion — Michelin Vélo',
+  },
+  {
     path: '**',
-    redirectTo: '',
+    redirectTo: 'auth',
   },
 ];

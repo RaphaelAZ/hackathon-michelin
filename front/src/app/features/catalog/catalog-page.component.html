@@ -39,13 +39,15 @@
       </div>
     </div>
 
-    @if (productStore.filteredProducts().length === 0) {
+    @if (productStore.loading()) {
+      <app-spinner />
+    } @else if (productStore.products().length === 0) {
       <div class="catalog__empty">
         <p>Aucun pneu ne correspond à votre recherche.</p>
       </div>
     } @else {
       <div class="catalog__grid">
-        @for (product of productStore.filteredProducts(); track product.id) {
+        @for (product of productStore.products(); track product.id) {
           <app-product-card [product]="product" />
         }
       </div>

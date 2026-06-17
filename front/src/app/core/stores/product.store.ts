@@ -1,17 +1,21 @@
-import { computed } from '@angular/core';
-import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
+import { inject } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { patchState, signalStore, withComputed, withHooks, withMethods, withState } from '@ngrx/signals';
+import { combineLatest, debounceTime, finalize, switchMap } from 'rxjs';
 
-import { PRODUCTS } from '../data/products.data';
-import { Product, TireCategory } from '../models/product.model';
+import { ProductFilters, ProductService } from '../services/product.service';
+import { Product, TIRE_CATEGORY_LABELS, TireCategory } from '../models/product.model';
 
 interface ProductState {
   products: Product[];
+  loading: boolean;
   selectedCategory: TireCategory | 'all';
   searchQuery: string;
 }
 
 const initialState: ProductState = {
-  products: PRODUCTS,
+  products: [],
+  loading: true,
   selectedCategory: 'all',
   searchQuery: '',
 };
@@ -19,25 +23,8 @@ const initialState: ProductState = {
 export const ProductStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
-  withComputed((store) => ({
-    filteredProducts: computed(() => {
-      const query = store.searchQuery().toLowerCase().trim();
-      const category = store.selectedCategory();
-
-      return store.products().filter((product: Product) => {
-        const matchesCategory = category === 'all' || product.category === category;
-        const matchesSearch =
-          query === '' ||
-          product.name.toLowerCase().includes(query) ||
-          product.shortDescription.toLowerCase().includes(query);
-
-        return matchesCategory && matchesSearch;
-      });
-    }),
-    categories: computed<TireCategory[]>(() => {
-      const categories = new Set<TireCategory>(store.products().map((product: Product) => product.category));
-      return [...categories];
-    }),
+  withComputed(() => ({
+    categories: () => Object.keys(TIRE_CATEGORY_LABELS) as TireCategory[],
   })),
   withMethods((store) => ({
     setCategory(category: TireCategory | 'all'): void {
@@ -46,11 +33,32 @@ export const ProductStore = signalStore(
     setSearchQuery(query: string): void {
       patchState(store, { searchQuery: query });
     },
-    getProductById(id: string): Product | undefined {
-      return store.products().find((product: Product) => product.id === id);
-    },
     getFeaturedProducts(): Product[] {
       return store.products().filter((product: Product) => product.inStock).slice(0, 3);
     },
+    getProductById(id: string): Product | undefined {
+      return store.products().find((product: Product) => product.id === id);
+    },
   })),
+  withHooks({
+    onInit(store) {
+      const productService = inject(ProductService);
+
+      combineLatest([
+        toObservable(store.searchQuery),
+        toObservable(store.selectedCategory),
+      ])
+        .pipe(
+          debounceTime(300),
+          switchMap(([search, category]) => {
+            patchState(store, { loading: true });
+            const filters: ProductFilters = { search, category };
+            return productService.getAll(filters).pipe(
+              finalize(() => patchState(store, { loading: false })),
+            );
+          }),
+        )
+        .subscribe((products) => patchState(store, { products }));
+    },
+  }),
 );

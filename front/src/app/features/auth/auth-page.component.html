@@ -1,0 +1,230 @@
+<div class="auth">
+
+  <!-- ── Left branding panel ─────────────────────────────────────────────── -->
+  <aside class="auth__brand" aria-hidden="true">
+    <div class="auth__brand-inner">
+      <a routerLink="/" class="auth__brand-logo" aria-label="Michelin Vélo">
+        <svg viewBox="0 0 160 36" width="140" height="32" aria-hidden="true">
+          <use href="assets/images/sprite-logos.svg#logo-brand" fill="currentColor"></use>
+        </svg>
+      </a>
+
+      <div class="auth__brand-hero">
+        <div class="auth__brand-tire" aria-hidden="true">
+          <img src="assets/images/tire-route.svg" alt="" width="200" height="200" />
+        </div>
+        <h2 class="auth__brand-title">
+          Le meilleur de la<br />
+          <span class="auth__brand-title--accent">route</span>,<br />
+          pour votre vélo.
+        </h2>
+      </div>
+
+      <ul class="auth__brand-perks" role="list">
+        <li class="auth__brand-perk">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="10" r="10" fill="var(--michelin-yellow)" />
+            <path d="M5 10l3.5 3.5L15 7" stroke="var(--michelin-blue-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          Livraison gratuite dès 50 €
+        </li>
+        <li class="auth__brand-perk">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="10" r="10" fill="var(--michelin-yellow)" />
+            <path d="M5 10l3.5 3.5L15 7" stroke="var(--michelin-blue-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          Retours gratuits sous 30 jours
+        </li>
+        <li class="auth__brand-perk">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="10" r="10" fill="var(--michelin-yellow)" />
+            <path d="M5 10l3.5 3.5L15 7" stroke="var(--michelin-blue-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          Garantie qualité Michelin
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- ── Right form panel ────────────────────────────────────────────────── -->
+  <main class="auth__panel">
+    <div class="auth__panel-inner">
+
+      <!-- Mobile logo -->
+      <a routerLink="/" class="auth__mobile-logo" aria-label="Michelin Vélo — Accueil">
+        <svg viewBox="0 0 160 36" width="120" height="28" aria-hidden="true">
+          <use href="assets/images/sprite-logos.svg#logo-brand" fill="currentColor"></use>
+        </svg>
+      </a>
+
+      <!-- Tab switcher -->
+      <div class="auth__tabs" role="tablist" aria-label="Mode d'authentification">
+        <button
+          role="tab"
+          [attr.aria-selected]="activeTab() === 'login'"
+          [class.auth__tab--active]="activeTab() === 'login'"
+          class="auth__tab"
+          (click)="switchTab('login')"
+        >
+          Connexion
+        </button>
+        <button
+          role="tab"
+          [attr.aria-selected]="activeTab() === 'register'"
+          [class.auth__tab--active]="activeTab() === 'register'"
+          class="auth__tab"
+          (click)="switchTab('register')"
+        >
+          Inscription
+        </button>
+      </div>
+
+      <!-- ── Login form ──────────────────────────────────────────────────── -->
+      @if (activeTab() === 'login') {
+        <form class="auth__form" (submit)="onLoginSubmit($event)" novalidate>
+            @if (authStore.error()) {
+              <div class="auth__error" role="alert">{{ authStore.error() }}</div>
+            }
+            <app-form-field label="Adresse email" inputId="login-email" [required]="true" [error]="fieldError(loginForm.email)">
+              <input
+                id="login-email"
+                type="email"
+                autocomplete="email"
+                placeholder="votre@email.com"
+                [formField]="loginForm.email"
+              />
+            </app-form-field>
+
+            <app-form-field label="Mot de passe" inputId="login-password" [required]="true" [error]="fieldError(loginForm.password)">
+              <input
+                id="login-password"
+                type="password"
+                autocomplete="current-password"
+                placeholder="••••••••"
+                [formField]="loginForm.password"
+              />
+            </app-form-field>
+
+            <div class="auth__form-actions">
+              <a href="#" class="auth__link">Mot de passe oublié ?</a>
+            </div>
+
+            <app-button type="submit" variant="primary" [fullWidth]="true" [disabled]="authStore.loading()">
+              @if (authStore.loading()) {
+                Connexion en cours…
+              } @else {
+                Se connecter
+              }
+            </app-button>
+          </form>
+
+        <p class="auth__switch">
+          Pas encore de compte ?
+          <button class="auth__switch-btn" (click)="switchTab('register')">
+            Créer un compte
+          </button>
+        </p>
+      }
+
+      <!-- ── Register form ───────────────────────────────────────────────── -->
+      @if (activeTab() === 'register') {
+        <div class="auth__form-header">
+            <h1 class="auth__form-title">Créer un compte</h1>
+            <p class="auth__form-subtitle">Rejoignez la communauté Michelin Vélo et profitez de nos offres exclusives.</p>
+          </div>
+
+          <form class="auth__form" (submit)="onRegisterSubmit($event)" novalidate>
+            @if (authStore.error()) {
+              <div class="auth__error" role="alert">{{ authStore.error() }}</div>
+            }
+            <div class="auth__form-row">
+              <app-form-field label="Prénom" inputId="reg-firstname" [required]="true" [error]="fieldError(registerForm.firstName)">
+                <input
+                  id="reg-firstname"
+                  type="text"
+                  autocomplete="given-name"
+                  placeholder="Jean"
+                  [formField]="registerForm.firstName"
+                />
+              </app-form-field>
+
+              <app-form-field label="Nom" inputId="reg-lastname" [required]="true" [error]="fieldError(registerForm.lastName)">
+                <input
+                  id="reg-lastname"
+                  type="text"
+                  autocomplete="family-name"
+                  placeholder="Dupont"
+                  [formField]="registerForm.lastName"
+                />
+              </app-form-field>
+            </div>
+
+            <app-form-field label="Adresse email" inputId="reg-email" [required]="true" [error]="fieldError(registerForm.email)">
+              <input
+                id="reg-email"
+                type="email"
+                autocomplete="email"
+                placeholder="votre@email.com"
+                [formField]="registerForm.email"
+              />
+            </app-form-field>
+
+            <app-form-field
+              label="Mot de passe"
+              inputId="reg-password"
+              [required]="true"
+              [error]="fieldError(registerForm.password)"
+              hint="Minimum 8 caractères"
+            >
+              <input
+                id="reg-password"
+                type="password"
+                autocomplete="new-password"
+                placeholder="••••••••"
+                [formField]="registerForm.password"
+              />
+            </app-form-field>
+
+            <app-form-field
+              label="Confirmer le mot de passe"
+              inputId="reg-confirm"
+              [required]="true"
+              [error]="passwordMismatch() ? 'Les mots de passe ne correspondent pas' : fieldError(registerForm.confirmPassword)"
+            >
+              <input
+                id="reg-confirm"
+                type="password"
+                autocomplete="new-password"
+                placeholder="••••••••"
+                [formField]="registerForm.confirmPassword"
+              />
+            </app-form-field>
+
+            <p class="auth__terms">
+              En créant un compte, vous acceptez nos
+              <a href="#" class="auth__link">Conditions d'utilisation</a>
+              et notre
+              <a href="#" class="auth__link">Politique de confidentialité</a>.
+            </p>
+
+            <app-button type="submit" variant="primary" [fullWidth]="true" [disabled]="authStore.loading()">
+              @if (authStore.loading()) {
+                Création en cours…
+              } @else {
+                Créer mon compte
+              }
+            </app-button>
+          </form>
+
+        <p class="auth__switch">
+          Déjà un compte ?
+          <button class="auth__switch-btn" (click)="switchTab('login')">
+            Se connecter
+          </button>
+        </p>
+      }
+
+    </div>
+  </main>
+
+</div>

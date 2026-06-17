@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { ProductCardComponent } from '../../common/components/product-card/product-card.component';
+import { SpinnerComponent } from '../../common/components/spinner/spinner.component';
 import { TIRE_CATEGORY_LABELS, TireCategory } from '../../core/models/product.model';
 import { ProductStore } from '../../core/stores/product.store';
 
 @Component({
   selector: 'app-catalog-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ProductCardComponent],
+  imports: [ProductCardComponent, SpinnerComponent],
   templateUrl: './catalog-page.component.html',
   styleUrls: ['./catalog-page.component.scss'],
 })

@@ -1,0 +1,31 @@
+get:
+  tags:
+    - Products
+  summary: List all products
+  operationId: productIndex
+  parameters:
+    - name: search
+      in: query
+      required: false
+      schema:
+        type: string
+        example: 'Power'
+    - name: category
+      in: query
+      required: false
+      schema:
+        type: string
+        enum: [route, ville, gravel, vtt, competition]
+        example: 'route'
+  responses:
+    '200':
+      description: List of products
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'

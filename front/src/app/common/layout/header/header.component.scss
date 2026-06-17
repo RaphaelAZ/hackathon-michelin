@@ -71,6 +71,33 @@
   transition: background-color 0.2s;
 }
 
+.header__auth-link {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--michelin-grey-700);
+  text-decoration: none;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--michelin-grey-200);
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+
+  &:hover {
+    color: var(--michelin-blue);
+    border-color: var(--michelin-blue);
+    background: rgba(39, 80, 155, 0.05);
+    text-decoration: none;
+  }
+
+  &.header__link--active {
+    color: var(--michelin-blue);
+    border-color: var(--michelin-blue);
+  }
+}
+
+
 .header__cart:hover {
   background-color: rgba(39, 80, 155, 0.08);
   text-decoration: none;

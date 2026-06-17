@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+
+import { AuthStore } from './core/stores/auth.store';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +10,10 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {}
+export class App implements OnInit {
+  private readonly authStore = inject(AuthStore);
+
+  ngOnInit(): void {
+    this.authStore.loadCurrentUser();
+  }
+}

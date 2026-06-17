@@ -1,0 +1,7 @@
+{
+  "name": "hackathon-michelin",
+  "private": true,
+  "scripts": {
+    "dev": "npx concurrently -c \"#0ea5e9,#22c55e\" \"composer --working-dir=back run dev\" \"npm --prefix front run start\""
+  }
+}

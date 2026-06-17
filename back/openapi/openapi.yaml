@@ -17,6 +17,10 @@ paths:
     $ref: 'paths/auth/refresh.yaml'
   /auth/me:
     $ref: 'paths/auth/me.yaml'
+  /products:
+    $ref: 'paths/products/index.yaml'
+  /products/{slug}:
+    $ref: 'paths/products/show.yaml'
 components:
   securitySchemes:
     accessToken:
@@ -40,3 +44,7 @@ components:
       $ref: 'components/schemas/Error.yaml'
     ValidationError:
       $ref: 'components/schemas/ValidationError.yaml'
+    Product:
+      $ref: 'components/schemas/product/Product.yaml'
+    ProductFeature:
+      $ref: 'components/schemas/product/ProductFeature.yaml'
