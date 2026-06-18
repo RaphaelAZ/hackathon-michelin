@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+
 
 import { AuthStore } from '../../../core/stores/auth.store';
 
@@ -11,5 +12,11 @@ import { AuthStore } from '../../../core/stores/auth.store';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  protected readonly authStore = inject(AuthStore);
+  private readonly authStore = inject(AuthStore);
+
+  protected readonly currentUser = computed(() => this.authStore.user());
+
+  protected logout(): void {
+    this.authStore.logout();
+  }
 }

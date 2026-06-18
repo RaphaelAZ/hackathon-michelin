@@ -20,13 +20,22 @@
       }
     </nav>
 
-    <a routerLink="/auth" class="header__auth-link" routerLinkActive="header__link--active">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" />
-        <path d="M4 20c0-4 3.582-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-      </svg>
-      Mon compte
-    </a>
+    @if (currentUser(); as user) {
+      <div class="header__account">
+        <span class="header__account-name">{{ user.name }}</span>
+        <button type="button" class="header__logout-btn" (click)="logout()">
+          Se déconnecter
+        </button>
+      </div>
+    } @else {
+      <a routerLink="/auth" class="header__auth-link" routerLinkActive="header__link--active">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" />
+          <path d="M4 20c0-4 3.582-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+        Se connecter
+      </a>
+    }
 
   </div>
 </header>
