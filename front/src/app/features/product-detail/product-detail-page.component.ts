@@ -94,7 +94,6 @@ export class ProductDetailPageComponent {
       this.isLoading.set(true);
       this.notFound.set(false);
       this.product.set(null);
-      this.selectedImageIndex.set(0);
       this.isDealerModalOpen.set(false);
       this.isLoadingDealers.set(false);
       this.dealerError.set('');
@@ -110,20 +109,6 @@ export class ProductDetailPageComponent {
           this.isLoading.set(false);
         },
       });
-    });
-
-    effect(() => {
-      const imagesCount = this.galleryImages().length;
-      const currentIndex = this.selectedImageIndex();
-
-      if (imagesCount === 0) {
-        this.selectedImageIndex.set(0);
-        return;
-      }
-
-      if (currentIndex >= imagesCount) {
-        this.selectedImageIndex.set(0);
-      }
     });
   }
 
@@ -161,52 +146,6 @@ export class ProductDetailPageComponent {
         this.isLoadingDealers.set(false);
       },
     });
-  }
-
-  protected selectImage(index: number): void {
-    if (index < 0 || index >= this.galleryImages().length) {
-      return;
-    }
-
-    this.switchImageWithTransition(index);
-  }
-
-  protected showPreviousImage(): void {
-    const images = this.galleryImages();
-    if (images.length <= 1) {
-      return;
-    }
-
-    const current = this.selectedImageIndex();
-    this.switchImageWithTransition((current - 1 + images.length) % images.length);
-  }
-
-  protected showNextImage(): void {
-    const images = this.galleryImages();
-    if (images.length <= 1) {
-      return;
-    }
-
-    const current = this.selectedImageIndex();
-    this.switchImageWithTransition((current + 1) % images.length);
-  }
-
-  private switchImageWithTransition(nextIndex: number): void {
-    if (nextIndex === this.selectedImageIndex()) {
-      return;
-    }
-
-    if (this.imageSwitchTimer) {
-      clearTimeout(this.imageSwitchTimer);
-      this.imageSwitchTimer = null;
-    }
-
-    this.isImageSwitching.set(true);
-    this.imageSwitchTimer = setTimeout(() => {
-      this.selectedImageIndex.set(nextIndex);
-      this.isImageSwitching.set(false);
-      this.imageSwitchTimer = null;
-    }, ProductDetailPageComponent.IMAGE_SWITCH_DURATION_MS);
   }
 
   protected setRating(rating: number): void {

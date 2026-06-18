@@ -1,0 +1,90 @@
+@if (open()) {
+  <div class="dealer-modal" (click)="onBackdropClick($event)">
+    <div
+      class="dealer-modal__surface"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="dealer-modal-title"
+    >
+      <div class="dealer-modal__header">
+        <div>
+          <p class="dealer-modal__eyebrow">Revendeurs proches</p>
+          <h2 id="dealer-modal-title">{{ title() }}</h2>
+        </div>
+
+        <button
+          type="button"
+          class="dealer-modal__close"
+          aria-label="Fermer la fenêtre"
+          (click)="close()"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+
+      <p class="dealer-modal__intro">
+        Retrouvez nos partenaires pour obtenir des conseils, vérifier la disponibilité et faire monter vos pneus.
+      </p>
+
+      @if (loading()) {
+        <p class="dealer-modal__state">Chargement des revendeurs...</p>
+      } @else if (error()) {
+        <p class="dealer-modal__state dealer-modal__state--error">{{ error() }}</p>
+        <div class="dealer-modal__state-actions">
+          <app-button variant="outline" size="sm" (clicked)="retryLoad()">
+            Reessayer
+          </app-button>
+        </div>
+      } @else if (dealers().length === 0) {
+        <p class="dealer-modal__state">Aucun revendeur disponible pour ce produit pour le moment.</p>
+      } @else {
+        <div class="dealer-modal__list">
+          @for (dealer of dealers(); track dealer.name) {
+            <article class="dealer-modal__card">
+              <div class="dealer-modal__card-main">
+                <div class="dealer-modal__card-top">
+                  <div>
+                    <h3>{{ dealer.name }}</h3>
+                    <p class="dealer-modal__distance">{{ dealer.distance }}</p>
+                  </div>
+                  <span class="dealer-modal__badge">Partenaire</span>
+                </div>
+
+                <dl class="dealer-modal__details">
+                  <div>
+                    <dt>Adresse</dt>
+                    <dd>{{ dealer.address }}, {{ dealer.city }}</dd>
+                  </div>
+                  <div>
+                    <dt>Téléphone</dt>
+                    <dd>{{ dealer.phone }}</dd>
+                  </div>
+                  <div>
+                    <dt>Horaires</dt>
+                    <dd>{{ dealer.hours }}</dd>
+                  </div>
+                </dl>
+
+                <ul class="dealer-modal__services" role="list">
+                  @for (service of dealer.services; track service) {
+                    <li>{{ service }}</li>
+                  }
+                </ul>
+              </div>
+
+              <app-button variant="outline" size="sm">
+                Contacter ce revendeur
+              </app-button>
+            </article>
+          }
+        </div>
+      }
+
+      <div class="dealer-modal__footer">
+        <app-button variant="ghost" (clicked)="close()">
+          Fermer
+        </app-button>
+      </div>
+    </div>
+  </div>
+}
