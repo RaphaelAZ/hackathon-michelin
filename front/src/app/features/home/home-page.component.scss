@@ -283,7 +283,7 @@ section {
 
 .tech__grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 1px;
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 0.7rem;
@@ -293,18 +293,23 @@ section {
 
 .tech__cell {
   background: #15140f;
-  padding: 1.7rem;
+  padding: 1.7rem 1.4rem;
+  text-align: center;
 }
 
-.tech__cell h3 {
-  color: #fff;
-  font-size: 1.1rem;
+.tech__stat-value {
+  color: #f2c200;
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1;
+  margin: 0;
 }
 
-.tech__cell p {
-  margin-top: 0.6rem;
+.tech__stat-label {
+  margin-top: 0.5rem;
   color: rgba(255, 255, 255, 0.62);
-  font-size: 0.92rem;
+  font-size: 0.82rem;
+  line-height: 1.3;
 }
 
 .reviews {
@@ -355,7 +360,7 @@ section {
   }
 
   .tech__grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 

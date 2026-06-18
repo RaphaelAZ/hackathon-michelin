@@ -80,14 +80,14 @@
   <div class="container">
     <div class="section-head">
       <p class="section-eyebrow">Pourquoi Michelin</p>
-      <h2>L'ingénierie au cœur de chaque pneu.</h2>
-      <p>Quatre points clés pour gagner en vitesse, sécurité et durabilité.</p>
+      <h2>Des chiffres qui parlent d'eux-mêmes.</h2>
+      <p>La performance Michelin, mesurée et prouvée.</p>
     </div>
     <div class="tech__grid">
-      @for (pillar of techPillars; track pillar.title) {
+      @for (stat of stats; track stat.label) {
         <article class="tech__cell">
-          <h3>{{ pillar.title }}</h3>
-          <p>{{ pillar.description }}</p>
+          <p class="tech__stat-value">{{ stat.value }}</p>
+          <p class="tech__stat-label">{{ stat.label }}</p>
         </article>
       }
     </div>
