@@ -76,7 +76,7 @@ export class TireSceneComponent implements AfterViewInit, OnDestroy {
     this.ctx = canvas.getContext('2d')!;
 
     this.imgSide = new Image();
-    this.imgSide.src = '/assets/images/tires/gravel/gravel_tire5.webp';
+    this.imgSide.src = '/assets/images/tires/gravel/gravel_tire_noshadow.webp';
 
     this.imgFace = new Image();
     this.imgFace.src = '/assets/images/tires/gravel/gravel_tire4.webp';
