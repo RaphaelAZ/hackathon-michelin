@@ -12,7 +12,7 @@ import { AuthStore } from '../../../core/stores/auth.store';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  private readonly authStore = inject(AuthStore);
+  protected readonly authStore = inject(AuthStore);
 
   protected readonly currentUser = computed(() => this.authStore.user());
 
