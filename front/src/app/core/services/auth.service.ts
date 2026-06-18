@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { AuthTokens, LoginRequest, RegisterRequest, User } from '../models/auth.model';
 
-const API = 'http://localhost:8000/api/v1/auth';
+const API = '/api/v1/auth';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {

@@ -20,7 +20,7 @@ export class ResellerService {
 
   getByProductSlug(slug: string): Observable<DealerInfo[]> {
     return this.http
-      .get<{ data: ApiReseller[] }>(`http://localhost:8000/api/v1/products/${slug}/resellers`)
+      .get<{ data: ApiReseller[] }>(`/api/v1/products/${slug}/resellers`)
       .pipe(map((response) => response.data.map((item) => this.mapReseller(item))));
   }
 

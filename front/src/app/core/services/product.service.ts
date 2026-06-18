@@ -55,19 +55,19 @@ export class ProductService {
     }
 
     return this.http
-      .get<{ data: ApiProduct[] }>('http://localhost:8000/api/v1/products', { params })
+      .get<{ data: ApiProduct[] }>('/api/v1/products', { params })
       .pipe(map((response) => response.data.map(this.mapProduct)));
   }
 
   getBySlug(slug: string): Observable<Product> {
     return this.http
-      .get<{ data: ApiProduct }>(`http://localhost:8000/api/v1/products/${slug}`)
+      .get<{ data: ApiProduct }>(`/api/v1/products/${slug}`)
       .pipe(map((response) => this.mapProduct(response.data)));
   }
 
   createComment(slug: string, payload: CreateCommentPayload): Observable<ProductComment> {
     return this.http
-      .post<{ data: ApiComment }>(`http://localhost:8000/api/v1/products/${slug}/comments`, payload)
+      .post<{ data: ApiComment }>(`/api/v1/products/${slug}/comments`, payload)
       .pipe(map((response) => this.mapComment(response.data)));
   }
 

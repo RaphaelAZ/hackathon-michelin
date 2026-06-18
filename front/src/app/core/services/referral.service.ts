@@ -21,7 +21,7 @@ export class ReferralService {
 
   getDashboard(): Observable<ReferralDashboard> {
     return this.http
-      .get<ApiReferralDashboard>('http://localhost:8000/api/v1/parrainage')
+      .get<ApiReferralDashboard>('/api/v1/parrainage')
       .pipe(map((response) => this.mapDashboard(response)));
   }
 
