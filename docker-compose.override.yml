@@ -1,0 +1,16 @@
+# For enabling dev-mode.
+services:
+  app:
+    volumes:
+      - ./back:/var/www/html
+
+  queue:
+    volumes:
+      - ./back:/var/www/html
+
+  front:
+    build:
+      target: development
+    volumes:
+      - ./front:/app
+      - /app/node_modules
