@@ -13,9 +13,11 @@
       <a routerLink="/pneus" routerLinkActive="header__link--active" class="header__link">
         Nos pneus
       </a>
-      <a routerLink="/parrainage" routerLinkActive="header__link--active" class="header__link">
-        Parrainage
-      </a>
+      @if (authStore.isAuthenticated()) {
+        <a routerLink="/parrainage" routerLinkActive="header__link--active" class="header__link">
+          Parrainage
+        </a>
+      }
     </nav>
 
     <a routerLink="/auth" class="header__auth-link" routerLinkActive="header__link--active">
