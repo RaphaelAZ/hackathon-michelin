@@ -19,23 +19,12 @@ export class HomePageComponent {
   protected readonly featuredProducts = computed(() => this.productStore.getFeaturedProducts());
   protected readonly isLoading = this.productStore.loading;
 
-  protected readonly techPillars = [
-    {
-      title: 'Aéro affiné en soufflerie',
-      description: 'Profils optimisés sur de multiples angles de lacet pour réduire la traînée à haute vitesse.',
-    },
-    {
-      title: 'Composés hautes performances',
-      description: 'Mélanges gomme/carcasse orientés grip, rendement et durabilité sur route comme gravel.',
-    },
-    {
-      title: 'Montage et contrôle qualité',
-      description: 'Chaque référence est validée avant expédition pour garantir constance et sécurité.',
-    },
-    {
-      title: 'Confort et précision',
-      description: 'Largeurs modernes et structures renforcées pour une tenue de route fiable et confortable.',
-    },
+  protected readonly stats = [
+    { value: '99%',    label: 'Clients satisfaits' },
+    { value: '130+',   label: 'Ans d\'expertise pneumatique' },
+    { value: '1 180g', label: 'Poids record paire carbone' },
+    { value: '50mm',   label: 'Hauteur de jante optimale' },
+    { value: '3×',     label: 'Plus de durabilité vs pneu standard' },
   ];
 
   protected readonly reviews = [
