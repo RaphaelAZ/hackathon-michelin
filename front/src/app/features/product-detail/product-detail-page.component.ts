@@ -14,11 +14,16 @@ import { finalize } from 'rxjs';
 
 import { BadgeComponent } from '../../common/components/badge/badge.component';
 import { ButtonComponent } from '../../common/components/button/button.component';
+import {
+  DealerInfo,
+  DealerModalComponent,
+} from '../../common/components/dealer-modal/dealer-modal.component';
 import { PriceComponent } from '../../common/components/price/price.component';
 import { SpinnerComponent } from '../../common/components/spinner/spinner.component';
 import { AuthStore } from '../../core/stores/auth.store';
 import { Product, TIRE_CATEGORY_LABELS } from '../../core/models/product.model';
 import { ProductService } from '../../core/services/product.service';
+import { ResellerService } from '../../core/services/reseller.service';
 
 @Component({
   selector: 'app-product-detail-page',
@@ -30,6 +35,7 @@ import { ProductService } from '../../core/services/product.service';
     RouterLink,
     BadgeComponent,
     ButtonComponent,
+    DealerModalComponent,
     PriceComponent,
     SpinnerComponent,
   ],
@@ -40,6 +46,7 @@ export class ProductDetailPageComponent {
   private static readonly IMAGE_SWITCH_DURATION_MS = 120;
 
   private readonly productService = inject(ProductService);
+  private readonly resellerService = inject(ResellerService);
   private readonly authStore = inject(AuthStore);
   private readonly formBuilder = inject(FormBuilder);
   private imageSwitchTimer: ReturnType<typeof setTimeout> | null = null;
@@ -50,6 +57,10 @@ export class ProductDetailPageComponent {
   protected readonly isLoading = signal(true);
   protected readonly notFound = signal(false);
   protected readonly isSubmittingComment = signal(false);
+  protected readonly isDealerModalOpen = signal(false);
+  protected readonly isLoadingDealers = signal(false);
+  protected readonly dealerError = signal('');
+  protected readonly dealers = signal<DealerInfo[]>([]);
   protected readonly commentError = signal('');
   protected readonly ratingOptions = [1, 2, 3, 4, 5] as const;
 
@@ -83,6 +94,11 @@ export class ProductDetailPageComponent {
       this.isLoading.set(true);
       this.notFound.set(false);
       this.product.set(null);
+      this.selectedImageIndex.set(0);
+      this.isDealerModalOpen.set(false);
+      this.isLoadingDealers.set(false);
+      this.dealerError.set('');
+      this.dealers.set([]);
 
       this.productService.getBySlug(slug).subscribe({
         next: (p) => {
@@ -96,6 +112,101 @@ export class ProductDetailPageComponent {
       });
     });
 
+    effect(() => {
+      const imagesCount = this.galleryImages().length;
+      const currentIndex = this.selectedImageIndex();
+
+      if (imagesCount === 0) {
+        this.selectedImageIndex.set(0);
+        return;
+      }
+
+      if (currentIndex >= imagesCount) {
+        this.selectedImageIndex.set(0);
+      }
+    });
+  }
+
+  protected openDealerModal(): void {
+    this.isDealerModalOpen.set(true);
+    if (this.dealers().length === 0 && !this.isLoadingDealers()) {
+      this.loadDealers();
+    }
+  }
+
+  protected closeDealerModal(): void {
+    this.isDealerModalOpen.set(false);
+  }
+
+  protected retryLoadDealers(): void {
+    this.loadDealers();
+  }
+
+  private loadDealers(): void {
+    const slug = this.id();
+    if (!slug) {
+      return;
+    }
+
+    this.isLoadingDealers.set(true);
+    this.dealerError.set('');
+
+    this.resellerService.getByProductSlug(slug).subscribe({
+      next: (dealers) => {
+        this.dealers.set(dealers);
+        this.isLoadingDealers.set(false);
+      },
+      error: () => {
+        this.dealerError.set('Impossible de charger les revendeurs pour ce produit.');
+        this.isLoadingDealers.set(false);
+      },
+    });
+  }
+
+  protected selectImage(index: number): void {
+    if (index < 0 || index >= this.galleryImages().length) {
+      return;
+    }
+
+    this.switchImageWithTransition(index);
+  }
+
+  protected showPreviousImage(): void {
+    const images = this.galleryImages();
+    if (images.length <= 1) {
+      return;
+    }
+
+    const current = this.selectedImageIndex();
+    this.switchImageWithTransition((current - 1 + images.length) % images.length);
+  }
+
+  protected showNextImage(): void {
+    const images = this.galleryImages();
+    if (images.length <= 1) {
+      return;
+    }
+
+    const current = this.selectedImageIndex();
+    this.switchImageWithTransition((current + 1) % images.length);
+  }
+
+  private switchImageWithTransition(nextIndex: number): void {
+    if (nextIndex === this.selectedImageIndex()) {
+      return;
+    }
+
+    if (this.imageSwitchTimer) {
+      clearTimeout(this.imageSwitchTimer);
+      this.imageSwitchTimer = null;
+    }
+
+    this.isImageSwitching.set(true);
+    this.imageSwitchTimer = setTimeout(() => {
+      this.selectedImageIndex.set(nextIndex);
+      this.isImageSwitching.set(false);
+      this.imageSwitchTimer = null;
+    }, ProductDetailPageComponent.IMAGE_SWITCH_DURATION_MS);
   }
 
   protected setRating(rating: number): void {

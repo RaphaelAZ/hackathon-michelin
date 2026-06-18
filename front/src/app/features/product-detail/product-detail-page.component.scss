@@ -158,6 +158,28 @@ app-price {
   border-top: 1px solid var(--michelin-grey-100);
 }
 
+.detail__purchase-title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--michelin-black);
+}
+
+.detail__purchase-copy {
+  margin: 0;
+  color: var(--michelin-grey-500);
+  line-height: 1.6;
+}
+
+.detail__dealer-status {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.detail__dealer-status--error {
+  color: #b42318;
+}
+
 .detail__reviews {
   margin-top: 4rem;
   padding-top: 3rem;

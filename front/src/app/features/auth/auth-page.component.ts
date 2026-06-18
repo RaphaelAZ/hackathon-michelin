@@ -4,7 +4,9 @@ import {
   FormField,
   email,
   form,
+  maxLength,
   minLength,
+  pattern,
   required,
   submit,
 } from '@angular/forms/signals';
@@ -44,6 +46,7 @@ export class AuthPageComponent {
     email: '',
     password: '',
     confirmPassword: '',
+    referralCode: '',
   });
   protected readonly registerForm = form(this.registerModel, (sp) => {
     required(sp.firstName, { message: 'Le prénom est requis' });
@@ -53,6 +56,11 @@ export class AuthPageComponent {
     required(sp.password, { message: 'Le mot de passe est requis' });
     minLength(sp.password, 8, { message: 'Minimum 8 caractères' });
     required(sp.confirmPassword, { message: 'Veuillez confirmer le mot de passe' });
+    minLength(sp.referralCode, 8, { message: 'Le code de parrainage doit contenir 8 caractères' });
+    maxLength(sp.referralCode, 8, { message: 'Le code de parrainage doit contenir 8 caractères' });
+    pattern(sp.referralCode, /^[A-Za-z0-9]*$/, {
+      message: 'Le code de parrainage ne peut contenir que lettres et chiffres',
+    });
   });
 
   protected fieldError(field: FieldTree<string, string | number>): string {
@@ -68,6 +76,13 @@ export class AuthPageComponent {
   protected switchTab(tab: AuthTab): void {
     this.activeTab.set(tab);
     this.passwordMismatch.set(false);
+  }
+
+  protected onReferralCodeInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const normalized = input.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8);
+    input.value = normalized;
+    this.registerModel.update((current) => ({ ...current, referralCode: normalized }));
   }
 
   protected onLoginSubmit(event: Event): void {
@@ -88,11 +103,12 @@ export class AuthPageComponent {
     }
     this.passwordMismatch.set(false);
     void submit(this.registerForm, async () => {
-      const { firstName, lastName, email, password } = this.registerModel();
+      const { firstName, lastName, email, password, referralCode } = this.registerModel();
       this.authStore.register({
         name: `${firstName} ${lastName}`.trim(),
         email,
         password,
+        referral_code: referralCode.trim() ? referralCode.trim().toUpperCase() : undefined,
       });
       return null;
     });

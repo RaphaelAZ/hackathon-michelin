@@ -65,8 +65,13 @@ export const AuthStore = signalStore(
             });
           },
           error: (err) => {
+            const validationErrors = err.error?.errors as Record<string, string[]> | undefined;
             const message =
-              err.status === 422 ? 'Cet email est déjà utilisé.' : 'Une erreur est survenue lors de l\'inscription.';
+              err.status === 422
+                ? validationErrors?.['referral_code']?.[0]
+                  ? 'Le code de parrainage est invalide.'
+                  : 'Cet email est déjà utilisé.'
+                : 'Une erreur est survenue lors de l\'inscription.';
             patchState(store, { loading: false, error: message });
           },
         });

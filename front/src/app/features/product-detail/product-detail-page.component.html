@@ -75,8 +75,35 @@
           @if (!p.inStock) {
             <app-badge variant="error">Produit en rupture de stock</app-badge>
           }
+
+          <div class="detail__purchase">
+            <p class="detail__purchase-title">Trouver un revendeur Michelin</p>
+            <p class="detail__purchase-copy">
+              Consultez les revendeurs partenaires proches pour ce pneu et leurs informations de contact.
+            </p>
+
+            <app-button variant="secondary" size="lg" (clicked)="openDealerModal()">
+              Trouver un revendeur
+            </app-button>
+
+            @if (dealerError() && !isDealerModalOpen()) {
+              <p class="detail__dealer-status detail__dealer-status--error">{{ dealerError() }}</p>
+              <app-button variant="ghost" size="sm" (clicked)="retryLoadDealers()">
+                Reessayer
+              </app-button>
+            }
+          </div>
         </div>
       </div>
+
+      <app-dealer-modal
+        [open]="isDealerModalOpen()"
+        [dealers]="dealers()"
+        [loading]="isLoadingDealers()"
+        [error]="dealerError()"
+        (closed)="closeDealerModal()"
+        (retry)="retryLoadDealers()"
+      />
 
       <section class="detail__reviews" aria-labelledby="reviews-title">
         <div class="detail__reviews-header">

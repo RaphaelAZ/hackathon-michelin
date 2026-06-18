@@ -140,6 +140,24 @@
             </app-form-field>
 
             <app-form-field
+              label="Code de parrainage (optionnel)"
+              inputId="reg-referral"
+              [error]="fieldError(registerForm.referralCode)"
+              hint="Entrez le code de 8 caractères envoyé par votre parrain"
+            >
+              <input
+                id="reg-referral"
+                type="text"
+                autocomplete="off"
+                autocapitalize="characters"
+                maxlength="8"
+                placeholder="AB3K9P2Q"
+                [formField]="registerForm.referralCode"
+                (input)="onReferralCodeInput($event)"
+              />
+            </app-form-field>
+
+            <app-form-field
               label="Mot de passe"
               inputId="reg-password"
               [required]="true"
