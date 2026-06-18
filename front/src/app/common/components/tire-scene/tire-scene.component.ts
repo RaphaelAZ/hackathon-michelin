@@ -568,7 +568,26 @@ export class TireSceneComponent implements AfterViewInit, OnDestroy {
       this.drawFaceTire(cx, cy);
       ctx.globalAlpha = p;
       this.drawTerrain(TERRAINS[0], scroll, horizon);
-      this.drawBike(cx, horizon - 44 * bikeScale, bikeScale, wheelAng);
+      const wr   = 44 * bikeScale;
+      const wb   = 96 * bikeScale;
+      const wy   = horizon - wr;
+      const imgS = this.imgSide;
+      if (imgS?.complete && imgS.naturalWidth) {
+        for (const wx of [cx - wb / 2, cx + wb / 2]) {
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(wx, wy, wr * 1.04, 0, TAU);
+          ctx.clip();
+          ctx.globalCompositeOperation = 'darken';
+          ctx.globalAlpha = p;
+          ctx.translate(wx, wy);
+          ctx.rotate(wheelAng);
+          ctx.drawImage(imgS, -wr, -wr, wr * 2, wr * 2);
+          ctx.restore();
+        }
+      }
+      ctx.globalAlpha = p;
+      this.drawBike(cx, horizon - 44 * bikeScale, bikeScale, wheelAng, true);
       ctx.globalAlpha = 1;
     }
 
